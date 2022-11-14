@@ -6,7 +6,7 @@ include('config.php');
 <!DOCTYPE html>
 <html>
     <head>
-        <title>REGISTRATION</title>
+        <title>Registration</title>
     </head>  
 <body>
     <div>
