@@ -1,6 +1,10 @@
 <?php
 include('config.php');
 include('login.php');
+$username = $_SESSION['username'];
+
+echo "Welcome $username";
+
 ?>
 
 <!DOCTYPE html>
