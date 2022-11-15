@@ -6,7 +6,7 @@ include('config.php');
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Registr</title>
+        <title>Registration</title>
     </head>  
 <body>
     <div>
@@ -33,21 +33,23 @@ include('config.php');
                 $User_Debt=$username.'_Debt';
 
                 ///Creating data table for Personal Expenses
-                $create = "CREATE TABLE $User_Pexpenses (PersonID int, LastName varchar(255), FirstName varchar(255))";
+                $create = "CREATE TABLE $User_Pexpenses (PexpenseID int NOT NULL AUTO_INCREMENT UNIQUE KEY, descr varchar(100), amount int,DS DATE,TS TIME)";
                 $create = $con->prepare($create);
                 $create->execute();
                 ///Creating data table for Home Expenses
-                $create = "CREATE TABLE $User_Hexpenses (PersonID int, LastName varchar(255), FirstName varchar(255))";
+                $create = "CREATE TABLE $User_Hexpenses (HexpenseID int NOT NULL AUTO_INCREMENT UNIQUE KEY, descr varchar(100), amount int,DS DATE,TS TIME)";
                 $create = $con->prepare($create);
                 $create->execute();
-                ///Creating data table for Owed Money
-                $create = "CREATE TABLE $User_Owed (PersonID int, LastName varchar(255), FirstName varchar(255))";
-                $create = $con->prepare($create);
-                $create->execute();
-                ///Creating data table for Debt Money
-                $create = "CREATE TABLE $User_Debt (PersonID int, LastName varchar(255), FirstName varchar(255))";
-                $create = $con->prepare($create);
-                $create->execute();
+                // ///Creating data table for Owed Money
+
+                // $create = "CREATE TABLE $User_Owed (PersonID int, LastName varchar(255), FirstName varchar(255))";
+                // $create = $con->prepare($create);
+                // $create->execute();
+                // ///Creating data table for Debt Money
+
+                // $create = "CREATE TABLE $User_Debt (PersonID int, LastName varchar(255), FirstName varchar(255))";
+                // $create = $con->prepare($create);
+                // $create->execute();
                 header("Location: index.php?=Account created successfully") ;
             }else{
                 echo "Couldn't Create The Account. Please Try again later." ; 

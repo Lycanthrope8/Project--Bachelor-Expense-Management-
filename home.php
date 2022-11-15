@@ -1,13 +1,12 @@
 <?php
 include('config.php');
-require 'login.php';
-
+include('login.php');
 ?>
 
 <!DOCTYPE html>
 <html>
     <body>
-        <H1>Connect Hoya gese Mayre Bap!!!</H1>
+        <H1>Connect Hoya gese!!!</H1>
 
         <h1>Personal Expenses</h1>
         <table>

@@ -1,7 +1,20 @@
-<?php     
+<?php
 include('config.php');
+?>
+<?php     
 $username = $_POST['username'];  
-$pass = $_POST['pass'];  
+$pass = $_POST['pass']; 
+if (isset($_POST["username"]))
+{
+  $username = $_POST["username"];
+  echo $username;
+  echo " is your username";
+} 
+else 
+{
+  $username = null;
+  echo "no username supplied";
+} 
 
 if (isset($_POST['username']) && isset($_POST['pass'])){
     if (empty($username)) {    

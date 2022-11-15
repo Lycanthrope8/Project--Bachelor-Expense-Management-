@@ -24,7 +24,7 @@
 
         <label>Username</label>
 
-        <input type="text" name="username" placeholder="Username"><br>
+        <input type="text" name="username" placeholder="username"><br>
 
         <label>Password</label>
 
