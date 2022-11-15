@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start(); 
 include "config.php";
 
@@ -73,7 +73,7 @@ if (isset($_POST['username']) && isset($_POST['pass'])) {
 
 }else{
 
-    header("Location: index.php");
+    header("Location: index.php?error=3.Incorrect User name or pass");
 
     exit();
 }
