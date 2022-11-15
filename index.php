@@ -12,7 +12,7 @@
 
 <body>
 
-     <form action="note.php" method="POST">
+     <form action="login.php" method="POST">
 
         <h2>LOGIN</h2>
 

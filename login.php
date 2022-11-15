@@ -1,16 +1,23 @@
-<?php
+ <?php
 session_start(); 
 include "config.php";
 
 if (isset($_POST['username']) && isset($_POST['pass'])) {
+
     function validate($data){
+
        $data = trim($data);
+
        $data = stripslashes($data);
+
        $data = htmlspecialchars($data);
+
        return $data;
+
     }
 
     $username = validate($_POST['username']);
+
     $pass = validate($_POST['pass']);
 
     if (empty($username)) {
@@ -22,18 +29,19 @@ if (isset($_POST['username']) && isset($_POST['pass'])) {
     }else if(empty($pass)){
 
         header("Location: index.php?error=Password is required");
+
         exit();
 
     }else{
 
-        $sql = "SELECT username,pass FROM users where username = '$username' and pass = '$pass'";  
+        $sql = "SELECT username,pass FROM users WHERE username = '$username' and pass = '$pass'";  
         $result = mysqli_query($con, $sql);  
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);  
+          
         $count = mysqli_num_rows($result);
 
         if ($count==1) {
 
-            $$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
             if ($row['username'] === $username && $row['pass'] === $pass) {
 
@@ -44,8 +52,6 @@ if (isset($_POST['username']) && isset($_POST['pass'])) {
                 $_SESSION['pass'] = $row['pass'];
 
                 header("Location: home.php");
-
-                exit();
 
             }else{
 
@@ -67,7 +73,7 @@ if (isset($_POST['username']) && isset($_POST['pass'])) {
 
 }else{
 
-    header("Location: index.php?error=3.Incorrect User name or pass");
+    header("Location: index.php");
 
     exit();
 }
