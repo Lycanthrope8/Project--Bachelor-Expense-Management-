@@ -5,7 +5,7 @@ $pass = $_POST['pass'];
 
 if (isset($_POST['username']) && isset($_POST['pass'])){
     if (empty($username)) {    
-    header("Location: index.php?error=Email address is required");
+    header("Location: index.php?error=Username is required");
     }else if(empty($pass)){
     header("Location: index.php?error=Password is required");
     }else{
@@ -30,7 +30,6 @@ if (isset($_POST['username']) && isset($_POST['pass'])){
         }
 }
 ?>
-
 
 // <?php
 // session_start(); 
