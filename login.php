@@ -1,4 +1,4 @@
-<?php
+<?php   
 session_start(); 
 include "config.php";
 
@@ -34,47 +34,20 @@ if (isset($_POST['username']) && isset($_POST['pass'])) {
 
     }else{
 
-        $sql = "SELECT username,pass FROM users WHERE username = '$username' and pass = '$pass'";  
+        $sql = "SELECT username,pass FROM users where username = '$username' and pass = '$pass'";  
         $result = mysqli_query($con, $sql);  
-          
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $count = mysqli_num_rows($result);
 
-        if ($count==1) {
-
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-            if ($row['username'] === $username && $row['pass'] === $pass) {
-
-                echo "Logged in!";
-
-                $_SESSION['username'] = $row['username'];
-
-                $_SESSION['pass'] = $row['pass'];
-
-                header("Location: home.php");
-
-            }else{
-
-                header("Location: index.php?error=1.Incorrect User name or pass");
-
-                exit();
-
-            }
-
-        }else{
-
-            header("Location: index.php?error=2.Incorrect User name or pass");
-
+        if($count === 1){  
+            echo "<h1><center> Login successful </center></h1>";
+            $_SESSION['username']=$username;
+            header("Location: home.php");
             exit();
-
+        }else{  
+            echo "<h1> Login failed. Invalid username or pass.</h1>";  
+            header("Location: index.php?error=Invalid username or password");
+            exit();
+                }
         }
-
-    }
-
-}else{
-
-    header("Location: index.php?error=3.Incorrect User name or pass");
-
-    exit();
 }
-?>

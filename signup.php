@@ -40,16 +40,6 @@ include('config.php');
                 $create = "CREATE TABLE $User_Hexpenses (HexpenseID int NOT NULL AUTO_INCREMENT UNIQUE KEY, descr varchar(100), amount int,DS DATE,TS TIME)";
                 $create = $con->prepare($create);
                 $create->execute();
-                // ///Creating data table for Owed Money
-
-                // $create = "CREATE TABLE $User_Owed (PersonID int, LastName varchar(255), FirstName varchar(255))";
-                // $create = $con->prepare($create);
-                // $create->execute();
-                // ///Creating data table for Debt Money
-
-                // $create = "CREATE TABLE $User_Debt (PersonID int, LastName varchar(255), FirstName varchar(255))";
-                // $create = $con->prepare($create);
-                // $create->execute();
                 header("Location: index.php?=Account created successfully") ;
             }else{
                 echo "Couldn't Create The Account. Please Try again later." ; 

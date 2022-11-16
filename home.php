@@ -1,9 +1,9 @@
 <?php
 include('config.php');
 include('login.php');
-$username = $_SESSION['username'];
 
-echo "Welcome $username";
+$username=$_SESSION['username'];
+echo "Welcome", $username;
 
 ?>
 
@@ -23,9 +23,9 @@ echo "Welcome $username";
         </table>
 
         <?php
-        $sql="SELECT DS,TS,descr,ammount FROM $User_Pexpenses";
-        $result= $con-> query(sql);
-        echo "HELLO"
+        // $sql="SELECT DS,TS,descr,ammount FROM $User_Pexpenses";
+        // $result= $con-> query(sql);
+        // echo "HELLO"
         ?>
     </body>
 </html>
