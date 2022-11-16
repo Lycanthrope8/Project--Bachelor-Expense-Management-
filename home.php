@@ -3,7 +3,7 @@ include('config.php');
 include('login.php');
 
 $username=$_SESSION['username'];
-echo "Welcome", $username;
+echo "Welcome ", $username;
 
 ?>
 
