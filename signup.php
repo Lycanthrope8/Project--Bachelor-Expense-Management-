@@ -82,6 +82,10 @@ include('config.php');
                 <label for="pass"><b>pass</b></label>
                 <input class="form-control" type="password" name="pass" required>
 
+                <!-- For Password-->
+                <label for="confirmpass"><b>Confrim pass</b></label>
+                <input class="form-control" type="confirmpass" name="confirmpass" required>
+
                 <input type="submit" id="register" name="register" value="Sign Up">
             </div>
         </form>
