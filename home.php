@@ -17,13 +17,17 @@ $recent_expenses = mysqli_query($con, $sql);
     <strong>Add Expense</strong>
     <form action="home.php" method="POST">
         <div class="container">
-            <textarea rows="3" name="description" placeholder="Description"></textarea>
-            <input type="number" name="amount" placeholder="Amount"/>
+            <textarea rows="3" name="description" placeholder="Description" required></textarea>
+            <input type="number" name="amount" placeholder="Amount" required/>
             <input type="submit" id="addPexpense" name="addPexpense" value="ADD">
         </div>
     </form>
 
     <?php
+
+    ////
+    //// Add Expense
+    ////
     if (isset($_POST['addPexpense'])){
         $descr = $_POST["description"];
         $amount = $_POST["amount"];
@@ -49,8 +53,8 @@ $recent_expenses = mysqli_query($con, $sql);
 				    <th>Amount</th>
 				    <th>Date</th>
                     <th>Time</th>
-				    <!-- <th>Edit</th>
-				    <th>Delete</th> -->
+				    <th>Edit</th>
+				    <th>Delete</th>
 				</tr>
 			    </thead>
 			    <tbody>
@@ -64,8 +68,8 @@ $recent_expenses = mysqli_query($con, $sql);
                     <td><?=$recent_expense['DS']?></td>
                     <td><?=$recent_expense['TS']?></td>
 				    <!-- <td><?=date('Y-m-d H:i:s', strtotime($recent_expense['DS']))?></td> For both time and date in a single column-->
-				    <!-- <td><a href="add_edit_expense.php?expense_id=<?=$recent_expense['PexpenseID']?>" class="btn btn-sm btn-primary">Edit</a></td>
-				    <td><a onclick="return confirm('Are you sure you want to delete this expense?')" href="delete_exepense.php?expense=<?=$recent_expense['id']?>" class="btn btn-sm btn-primary">Delete</a></td> -->
+				    <td><a href="edit_expense.php?PexpenseID=<?=$recent_expense['PexpenseID']?>" >Edit</a></td>
+				    <td><a href="delete_expense.php?PexpenseID=<?=$recent_expense['PexpenseID']?>">Delete</a></td>
 				</tr><?php
 			    }
 			    ?>
@@ -77,7 +81,6 @@ $recent_expenses = mysqli_query($con, $sql);
 		    ?>
 		    
 		</div>
-		<a href="add_edit_expense.php" class="btn btn-primary">Add Expense</a>
 	    </div>
 	</section>
     </body>
