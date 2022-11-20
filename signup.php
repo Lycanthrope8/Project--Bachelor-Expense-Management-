@@ -7,6 +7,8 @@ include('config.php');
 <html>
     <head>
         <title>Registration</title>
+
+        <link rel="stylesheet" type="text/css" href="assets/style.css">
     </head>  
 <body>
     <div>
@@ -55,38 +57,59 @@ include('config.php');
                 <p>Fill up the form with correct values</p>
 
                 <!-- For First Name-->
-                <label for="firstname"><b>First Name</b></label>
-                <input type="text" name="firstname" required>
+                <div class="form-group fn">
+                    <label class="form-label" for="firstname">First Name</label>
+                    <input class="form-input" type="text" name="firstname" required>
+                </div>
+                
 
                 <!-- For Middle Name-->
-                <label for="middlename"><b>Middle Name</b></label>
-                <input type="text" name="middlename">
+                <div class="form-group mn">
+                    <label class="form-label" for="middlename">Middle Name</label>
+                    <input class="form-input" type="text" name="middlename">
+                </div>
+                
 
                 <!-- For Last Name-->
-                <label for="lastname"><b>Last Name</b></label>
-                <input type="text" name="lastname" required>
+                <div class="form-group">
+                    <label class="form-label" for="lastname">Last Name</label>
+                    <input class="form-input" type="text" name="lastname" required>
+                </div>
+                
 
                 <!-- For Email-->
-                <label for="email"><b>Email-Address</b></label>
-                <input type="email" name="email" required>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input class="form-input" type="email" name="email" required>
+                </div>
+                
 
                 <!-- For Phone number-->
-                <label for="phone"><b>Phone Number</b></label>
-                <input type="text" name="phone" required>
+                <div class="form-group">
+                    <label class="form-label" for="phone">Phone Number</label>
+                    <input class="form-input" type="text" name="phone" required>
+                </div>
+                
 
                 <!-- For User Name-->
-                <label for="username"><b>User Name</b></label>
-                <input type="text" name="username" required>
+                <div class="form-group">
+                    <label class="form-label" for="username">User Name</label>
+                    <input class="form-input" type="text" name="username" required>
+                </div>
+                
 
                 <!-- For Password-->
-                <label for="pass"><b>pass</b></label>
-                <input class="form-control" type="password" name="pass" required>
+                <div class="form-group">
+                    <label class="form-label" for="pass">Password</label>
+                    <input class="form-input" type="password" name="pass" required>
+                </div>
 
                 <!-- For Password-->
-                <label for="confirmpass"><b>Confrim pass</b></label>
-                <input class="form-control" type="confirmpass" name="confirmpass" required>
-
-                <input type="submit" id="register" name="register" value="Sign Up">
+                <div class="form-group">
+                    <label class="form-label" for="confirmpass">Confirm pass</label>
+                    <input class="form-input" type="confirmpass" name="confirmpass" required>
+                </div>
+                <input class="form-submit" type="submit" id="register" name="register" value="Sign Up">
             </div>
         </form>
     </div>
