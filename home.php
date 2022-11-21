@@ -1,87 +1,101 @@
+
 <?php
+
 include('config.php');
 include('login.php');
 
 $username=$_SESSION['username'];
 $user_pexpenses=$username.'_Pexpenses';
-
-
-$sql = "select * from $user_pexpenses order by PexpenseID desc";
-$recent_expenses = mysqli_query($con, $sql); 
 ?>
 
-
-
 <!DOCTYPE html>
-<html  >
-    <strong>Add Expense</strong>
-    <form action="home.php" method="POST">
-        <div class="container">
-            <textarea rows="3" name="description" placeholder="Description" required></textarea>
-            <input type="number" name="amount" placeholder="Amount" required/>
-            <input type="submit" id="addPexpense" name="addPexpense" value="ADD">
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <!-- <?php require_once 'process.php'; ?> -->
+        <!-- Session message. Div is for design purpose -->
+        <?php if(isset($_SESSION['message'])):?>
+        <div> 
+            <?php echo $_SESSION['message']; 
+                unset($_SESSION['message']);
+            ?>
         </div>
-    </form>
+        <?php endif; ?>
+        <!-- Query to show whole data table -->
+        <?php
+        $result = $con->query("SELECT * FROM $user_pexpenses ORDER BY PexpenseID DESC");
+            ?>
+            <div>
+                <!--Creating data table-->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th colspan='2'>Action</th>
+                        </tr>
+                    </thead>
+                    <!--Loop to see the fetched data table-->
 
-    <?php
+                    <?php
+                        while ($row = $result->fetch_assoc()):
+                    ?>
 
-    ////
-    //// Add Expense
-    ////
-    if (isset($_POST['addPexpense'])){
-        $descr = $_POST["description"];
-        $amount = $_POST["amount"];
-    
-            
-        $addsql = "INSERT INTO $user_pexpenses (descr,amount,ds,ts) VALUES(?,?,?,?)";
-        $stmtadd = $con->prepare($addsql);     // ???????????????????????
-        $result = $stmtadd->execute([$descr,$amount,getdate(),gettimeofday()]);   // ???????????????????????
-            
-        header("Location: home.php?=Succesfully Added") ;
-    }
-    ?>    
- 
+                        <tr>
+                            <td> <?php echo $row['PexpenseID']; ?> </td>
+                            <td> <?php echo $row['descr']; ?> </td>
+                            <td> <?php echo $row['amount']; ?> </td>
+                            <td> <?php echo $row['DS']; ?> </td>
+                            <td> <?php echo $row['TS']; ?> </td>
+                            <td>
+                                <a href="home.php?edit=<?php echo $row['PexpenseID']; ?>"
+                                    >Edit</a>
+                                <a href="process.php?delete=<?php echo $row['PexpenseID']; ?>"
+                                    >Delete</a>
+                            </td>
+                        </tr>
+                            
+                    <!--Ending the Loop-->
+                    <?php endwhile;?>
+                </table>
+            </div>
 
-    <strong>MY RECENT EXPENSES</strong>
-		    <?php
-		    if(!empty($recent_expenses)){
-			?><table border=1px>
-			    <thead>
-				<tr>
-				    <th>ID</th>
-				    <th>Description</th>
-				    <th>Amount</th>
-				    <th>Date</th>
-                    <th>Time</th>
-				    <th>Edit</th>
-				    <th>Delete</th>
-				</tr>
-			    </thead>
-			    <tbody>
-			    <?php
-			    foreach($recent_expenses as $recent_expense){
-				?><tr>
-				    <td><?=$recent_expense['PexpenseID']?></td>
-				    <td><?=$recent_expense['descr']?></td>
-				    <td><?=$recent_expense['amount']?></td>
-				    <!-- <td><?=$recent_expense['category_name']?></td> -->
-                    <td><?=$recent_expense['DS']?></td>
-                    <td><?=$recent_expense['TS']?></td>
-				    <!-- <td><?=date('Y-m-d H:i:s', strtotime($recent_expense['DS']))?></td> For both time and date in a single column-->
-				    <td><a href="edit_expense.php?PexpenseID=<?=$recent_expense['PexpenseID']?>">Edit</a></td>
-				    <td><a href="delete_expense.php?PexpenseID=<?=$recent_expense['PexpenseID']?>">Delete</a></td>
-				</tr><?php
-			    }
-			    ?>
-			    </tbody>
-			</table><?php
-		    }else{
-			?><h4>No expenses added yet</h4><?php
-		    }
-		    ?>
-		    
-		</div>
-	    </div>
-	</section>
+        
+        <?php
+        //function to print fetched array
+        function pre_r($array){
+            echo '<pre>';
+            print_r($array);
+            echo '</pre>';
+        }
+        ?>
+
+
+
+        <!--ADD Amount Form -->
+        <form action="process.php" method="POST">
+            <div class="container">
+                <input type="hidden" name="PexpenseID" value="<?php echo $PexpenseID ?>">
+                <label>Description</label>
+                <input type="text" name="descr" 
+                        value="<?php echo $descr; ?>" placeholder="Description" required>
+                <label>Amount</label>
+                <input type="number" name="amount" 
+                        value="<?php echo $amount; ?>" placeholder="Amount" required/>
+                <?php 
+                if ($update == true):
+                ?>
+                    <button type="submit" name="update">Update</button>
+                <?php else: ?>
+                    <button type="submit" name="add">ADD</button>
+                <?php endif; ?>
+            </div>
+        </form>
     </body>
 </html>

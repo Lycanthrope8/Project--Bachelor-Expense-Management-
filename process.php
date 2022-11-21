@@ -1,5 +1,6 @@
 <?php
 
+
 include('config.php');
 include('login.php');
 $username=$_SESSION['username'];
@@ -10,7 +11,7 @@ $descr = '';
 $amount = '';
 
 if(isset($_POST['add'])){
-    $descr = $_POST['description'];
+    $descr = $_POST['descr'];
     $amount = $_POST['amount'];
 
     
@@ -23,7 +24,7 @@ if(isset($_POST['add'])){
     
     $_SESSION['message'] = "Record Has Been Saved";
     $_SESSION['msg_type'] = "Success";
-    header("Location: notindex.php?=Succesfully Added");
+    header("Location: home.php?=Succesfully Added");
 }
 
 if(isset($_GET['delete'])){
@@ -33,24 +34,22 @@ if(isset($_GET['delete'])){
 
     $_SESSION['message'] = "Record Has Been Deleted";
     $_SESSION['msg_type'] = "Danger";
-    header("Location: notindex.php?=Succesfully Added");
+    header("Location: home.php?=Succesfully Deleted");
 }
 
 if(isset($_GET['edit'])){
+    
     $PexpenseID = $_GET['edit'];
     $result = $con->query("SELECT * FROM $user_pexpenses WHERE PexpenseID=$PexpenseID");
-    // pre_r($result->fetch_assoc());
-    // function pre_r($array){
-    //     echo '<pre>';
-    //     print_r($array);
-    //     echo '</pre>';
-    //     }
     $update=true;
-    if (count($result)==1){
-        $row = $result->fetch_array();
-        $descr = $row['descr'];
-        $amount = $row['amount'];
-    }
+    $row = $result->fetch_array();
+    $descr = $row['descr'];
+    $amount = $row['amount'];
+    // if (count($result)==1){
+    //     $row = $result->fetch_array();
+    //     $descr = $row['descr'];
+    //     $amount = $row['amount'];
+    // }
 
 }
 
@@ -62,10 +61,7 @@ if (isset($_POST['update'])){
     $result = $con->query("UPDATE $user_pexpenses SET descr='$descr',amount=$amount WHERE PexpenseID=$PexpenseID");
     $_SESSION['message'] = "Record has been updated";
     $_SESSION['msg_type'] = 'warning';
-
+    header("Location: home.php?=Successfully Updated");
 }
-
-
-
 ?>
 
