@@ -45,7 +45,7 @@ $recent_expenses = mysqli_query($con, $sql);
     <strong>MY RECENT EXPENSES</strong>
 		    <?php
 		    if(!empty($recent_expenses)){
-			?><table class="table table-bordered table-striped table-condensed">
+			?><table border=1px>
 			    <thead>
 				<tr>
 				    <th>ID</th>
@@ -68,7 +68,7 @@ $recent_expenses = mysqli_query($con, $sql);
                     <td><?=$recent_expense['DS']?></td>
                     <td><?=$recent_expense['TS']?></td>
 				    <!-- <td><?=date('Y-m-d H:i:s', strtotime($recent_expense['DS']))?></td> For both time and date in a single column-->
-				    <td><a href="edit_expense.php?PexpenseID=<?=$recent_expense['PexpenseID']?>" >Edit</a></td>
+				    <td><a href="edit_expense.php?PexpenseID=<?=$recent_expense['PexpenseID']?>">Edit</a></td>
 				    <td><a href="delete_expense.php?PexpenseID=<?=$recent_expense['PexpenseID']?>">Delete</a></td>
 				</tr><?php
 			    }
