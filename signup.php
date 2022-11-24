@@ -26,9 +26,9 @@ include('config.php');
             $username = $_POST['username'];
             $pass = $_POST['pass'];
             
-            $sql = "INSERT INTO users2 (firstname,middlename,lastname,email,phone,username,pass,confirmpass) VALUES(?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (firstname,middlename,lastname,email,phone,username,pass) VALUES(?,?,?,?,?,?,?)";
             $stmtinsert = $con->prepare($sql);     // ???????????????????????
-            $result = $stmtinsert->execute([$firstname,$middlename,$lastname,$email,$phone,$username,$pass,$confirmpass]);   // ???????????????????????
+            $result = $stmtinsert->execute([$firstname,$middlename,$lastname,$email,$phone,$username,$pass]);   // ???????????????????????
             
             //echo $firstname ." ". $middlename ." ". $lastname . " " . $email . " " . $phone . " " . $pass; 
             
