@@ -5,7 +5,9 @@ include('config.php');
 include('login.php');
 $username=$_SESSION['username'];
 $user_id=$_SESSION['user_id'];
-$UExpenseID=0;
+$home_id=$_SESSION['home_id'];
+$homename=$_SESSION['homename'];
+$HExpenseID=0;
 $update=false;
 $descr = '';
 $amount = '';
@@ -20,29 +22,29 @@ if(isset($_POST['add'])){
 
 
     // $con->query("INSERT INTO $user_pexpenses (descr,amount,ds,ts) VALUES($descr,$amount,getdate(),getdate())");
-    $addsql = "INSERT INTO userexpenses (user_id,username,descr,amount,category,ds,ts) VALUES(?,?,?,?,?,?,?)";
+    $addsql = "INSERT INTO homeexpenses (home_id,user_id,username,descr,amount,category,ds,ts) VALUES(?,?,?,?,?,?,?,?)";
     $stmtadd = $con->prepare($addsql);     // ???????????????????????
-    $result = $stmtadd->execute([$user_id,$username,$descr,$amount,$category,getdate(),gettimeofday()]); 
+    $result = $stmtadd->execute([$home_id,$user_id,$username,$descr,$amount,$category,getdate(),gettimeofday()]); 
     
     $_SESSION['message'] = "Record Has Been Saved";
     $_SESSION['msg_type'] = "Success";
-    header("Location: home.php?=Succesfully Added");
+    header("Location: house.php?=Succesfully Added");
 }
 
 if(isset($_GET['delete'])){
-    $UExpenseID = $_GET['delete'];
+    $HExpenseID = $_GET['delete'];
 
-    $con->query("DELETE FROM userexpenses where UExpenseID=$UExpenseID");
+    $con->query("DELETE FROM homeexpenses where HExpenseID=$HExpenseID");
 
     $_SESSION['message'] = "Record Has Been Deleted";
     $_SESSION['msg_type'] = "Danger";
-    header("Location: home.php?=Succesfully Deleted");
+    header("Location: house.php?=Succesfully Deleted");
 }
 
 if(isset($_GET['edit'])){
     
-    $UExpenseID = $_GET['edit'];
-    $result = $con->query("SELECT descr,amount,category FROM userexpenses WHERE UExpenseID=$UExpenseID");
+    $HExpenseID = $_GET['edit'];
+    $result = $con->query("SELECT descr,amount,category FROM homeexpenses WHERE HExpenseID=$HExpenseID");
     $update=true;
     $row = $result->fetch_array();
     $descr = $row['descr'];
@@ -57,15 +59,14 @@ if(isset($_GET['edit'])){
 }
 
 if (isset($_POST['update'])){
-    $UExpenseID = $_POST['UExpenseID'];
+    $HExpenseID = $_POST['HExpenseID'];
     $descr = $_POST['descr'];
     $amount = $_POST['amount'];
     $category = $_POST['category'];
 
-    $result = $con->query("UPDATE userexpenses SET descr='$descr',amount=$amount, category='$category' WHERE UExpenseID=$UExpenseID");
+    $result = $con->query("UPDATE homeexpenses SET descr='$descr',amount=$amount, category='$category' WHERE HExpenseID=$HExpenseID");
     $_SESSION['message'] = "Record has been updated";
     $_SESSION['msg_type'] = 'warning';
-    header("Location: home.php?=Successfully Updated");
+    header("Location: house.php?=Successfully Updated");
 }
 ?>
-
