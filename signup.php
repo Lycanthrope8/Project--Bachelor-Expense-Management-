@@ -22,26 +22,31 @@ include('config.php');
             $username = $_POST['username'];
             $pass = $_POST['pass'];
             
-            $sql = "INSERT INTO users (firstname,middlename,lastname,email,phone,username,pass,joined_at) VALUES(?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (firstname,middlename,lastname,email,phone,username,pass) VALUES(?,?,?,?,?,?,?)";
             $stmtinsert = $con->prepare($sql);     // ???????????????????????
-            $result = $stmtinsert->execute([$firstname,$middlename,$lastname,$email,$phone,$username,$pass,getdate()]);   // ???????????????????????
+            $result = $stmtinsert->execute([$firstname,$middlename,$lastname,$email,$phone,$username,$pass]);   // ???????????????????????
             
             //echo $firstname ." ". $middlename ." ". $lastname . " " . $email . " " . $phone . " " . $pass; 
             
             if ($result){
-                $User_Pexpenses=$username.'_Pexpenses';
-                $User_Hexpenses=$username.'_Hexpenses';
-                $User_Owed=$username.'_Owed';
-                $User_Debt=$username.'_Debt';
+                $collect = $con->query("SELECT * FROM users WHERE username='$username'");
+                $row = $collect->fetch_assoc();
+                $user_id=$row['user_id'];
+                
+                $_SESSION['user_id']=$user_id;
+                $_SESSION['username']=$username;
+                // $User_Pexpenses=$username.'_Pexpenses';
+                // $User_Owed=$username.'_Owed';
+                // $User_Debt=$username.'_Debt';
 
                 ///Creating data table for Personal Expenses
-                $create = "CREATE TABLE $User_Pexpenses (PexpenseID int NOT NULL AUTO_INCREMENT UNIQUE KEY, descr varchar(100), amount int,DS DATE,TS TIME)";
-                $create = $con->prepare($create);
-                $create->execute();
+                // $create = "CREATE TABLE $User_Pexpenses (PexpenseID int NOT NULL AUTO_INCREMENT UNIQUE KEY, descr varchar(100),category varchar(100), amount int,DS DATE,TS TIME)";
+                // $create = $con->prepare($create);
+                // $create->execute();
                 ///Creating data table for Home Expenses
-                $create = "CREATE TABLE $User_Hexpenses (HexpenseID int NOT NULL AUTO_INCREMENT UNIQUE KEY, descr varchar(100), amount int,DS DATE,TS TIME)";
-                $create = $con->prepare($create);
-                $create->execute();
+                // $create = "CREATE TABLE $User_Hexpenses (HexpenseID int NOT NULL AUTO_INCREMENT UNIQUE KEY, descr varchar(100), amount int,DS DATE,TS TIME)";
+                // $create = $con->prepare($create);
+                // $create->execute();
                 header("Location: index.php?=Account created successfully") ;
             }else{
                 echo "Couldn't Create The Account. Please Try again later." ; 
@@ -107,7 +112,7 @@ include('config.php');
                 <!-- For Password-->
                 <div class="form-group">
                     <label class="form-label" for="confirmpass">Confirm pass</label>
-                    <input class="form-input" type="confirmpass" name="confirmpass" required>
+                    <input class="form-input" type="password" name="confirmpass" required>
                 </div>
                 <input class="form-submit" type="submit" id="register" name="register" value="Sign Up">
             </div>
