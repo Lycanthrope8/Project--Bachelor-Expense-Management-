@@ -20,9 +20,9 @@ if(isset($_POST['add'])){
 
 
     // $con->query("INSERT INTO $user_pexpenses (descr,amount,ds,ts) VALUES($descr,$amount,getdate(),getdate())");
-    $addsql = "INSERT INTO userexpenses (user_id,username,descr,amount,category,ds,ts) VALUES(?,?,?,?,?,?,?)";
+    $addsql = "INSERT INTO userexpenses (user_id,username,descr,amount,category) VALUES(?,?,?,?,?)";
     $stmtadd = $con->prepare($addsql);     // ???????????????????????
-    $result = $stmtadd->execute([$user_id,$username,$descr,$amount,$category,getdate(),gettimeofday()]); 
+    $result = $stmtadd->execute([$user_id,$username,$descr,$amount,$category]); 
     
     $_SESSION['message'] = "Record Has Been Saved";
     $_SESSION['msg_type'] = "Success";

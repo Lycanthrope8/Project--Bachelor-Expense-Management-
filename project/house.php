@@ -13,6 +13,7 @@ $home_id=$_SESSION['home_id'];
     $home_id=$row['home_id'];
     // var_dump($home_id); // vardump is used to print null
 
+
     function pre_r($array){
         echo '<pre>';
         print_r($array);
@@ -22,6 +23,20 @@ $home_id=$_SESSION['home_id'];
     if(is_null($home_id)){
         header("Location: homeindex.php");
     }
+
+
+    // Saving all home members names in an array///////
+    $sql = "SELECT username FROM users WHERE home_id=$home_id";
+    $r = mysqli_query($con,$sql);
+    $home_members = [];
+    while ($array = mysqli_fetch_array($r)) {
+        if ($username!=$array['username']){
+        $home_members[] = $array['username'];
+        }
+    }
+    $_SESSION['home_members']=$home_members;   
+
+    pre_r($home_members);
 ?>
 
 
@@ -75,12 +90,14 @@ $home_id=$_SESSION['home_id'];
                             <td> <?php echo $row['category']; ?> </td>
                             <td> <?php echo $row['ds']; ?> </td>
                             <td> <?php echo $row['ts']; ?> </td>
-                            <td>
-                                <a href="house.php?edit=<?php echo $row['HExpenseID']; ?>"
-                                    >Edit</a>
-                                <a href="processhome.php?delete=<?php echo $row['HExpenseID']; ?>"
-                                    >Delete</a>
-                            </td>
+                            <?php if($row['username']===$username){?>
+                                <td>
+                                    <a href="house.php?edit=<?php echo $row['HExpenseID']; ?>"
+                                        >Edit</a>
+                                    <a href="processhome.php?delete=<?php echo $row['HExpenseID']; ?>"
+                                        >Delete</a>
+                                </td>
+                            <?php } ?>
                         </tr>
                     
                             

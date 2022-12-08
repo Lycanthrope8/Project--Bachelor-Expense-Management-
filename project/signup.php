@@ -22,9 +22,9 @@ include('config.php');
             $username = $_POST['username'];
             $pass = $_POST['pass'];
             
-            $sql = "INSERT INTO users (firstname,middlename,lastname,email,phone,username,pass,joined_at) VALUES(?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (firstname,middlename,lastname,email,phone,username,pass) VALUES(?,?,?,?,?,?,?)";
             $stmtinsert = $con->prepare($sql);     // ???????????????????????
-            $result = $stmtinsert->execute([$firstname,$middlename,$lastname,$email,$phone,$username,$pass,getdate()]);   // ???????????????????????
+            $result = $stmtinsert->execute([$firstname,$middlename,$lastname,$email,$phone,$username,$pass]);   // ???????????????????????
             
             //echo $firstname ." ". $middlename ." ". $lastname . " " . $email . " " . $phone . " " . $pass; 
             

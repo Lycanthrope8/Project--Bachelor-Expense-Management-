@@ -20,9 +20,9 @@ $username=$_SESSION['username'];
             $securitycode = $_POST['securitycode'];
             $address = $_POST['address'];
             
-            $sql = "INSERT INTO homes (owner,homename,address,securitycode,created_at) VALUES(?,?,?,?,?)";
+            $sql = "INSERT INTO homes (owner,homename,address,securitycode) VALUES(?,?,?,?)";
             $stmtinsert = $con->prepare($sql);     // ???????????????????????
-            $result = $stmtinsert->execute([$owner,$homename,$address,$securitycode,getdate()]);   // ???????????????????????
+            $result = $stmtinsert->execute([$owner,$homename,$address,$securitycode]);   // ???????????????????????
             
         ///Saving home_id in users data table to access their home db 
             $result = $con->query("SELECT * FROM homes WHERE homename='$homename'");
