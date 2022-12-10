@@ -1,0 +1,20 @@
+.container{
+    text-align: center;
+}
+h1{
+    background-color: lightsalmon;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover{
+        background-color: darken($color: lightsalmon, $amount: 7%);
+    }
+    &:hover a{
+        color: white;
+    }
+}
+h1 a{
+    font-family: "axiforma";
+    color: black;
+    text-decoration: none;
+}
