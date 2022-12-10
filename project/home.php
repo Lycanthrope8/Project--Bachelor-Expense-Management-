@@ -150,9 +150,10 @@ $home_id=$_SESSION['home_id'];
                                 <?php if($row['HExpenseID']==NULL){?>
                                 <a href="home.php?edit=<?php echo $row['UExpenseID']; ?>"
                                     >Edit</a>
-                                <?php } ?>    
                                 <a href="process.php?delete=<?php echo $row['UExpenseID']; ?>"
-                                    >Delete</a>
+                                    >Delete</a>    
+                                <?php } ?>    
+                                
                             </td>
                         </tr>
                     
