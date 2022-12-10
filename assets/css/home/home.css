@@ -6,6 +6,7 @@ h1 {
   background-color: lightsalmon;
   padding: 10px;
   border-radius: 5px;
+  transition: 0.5s;
   cursor: pointer;
 }
 h1:hover {
@@ -16,6 +17,7 @@ h1:hover a {
 }
 
 h1 a {
+  transition: 0.5s;
   font-family: "axiforma";
   color: black;
   text-decoration: none;

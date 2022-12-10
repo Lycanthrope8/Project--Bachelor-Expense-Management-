@@ -94,7 +94,7 @@ p {
     color: rgba($color: rgb(255, 255, 255), $alpha: 0.75);
     text-transform: uppercase;
     transition: 0.5s;
-    // left: 0;
+    left: 0;
 }
 .form-group .form-input:valid ~ .form-label,
 .form-group .form-input:focus ~ .form-label{
