@@ -1,4 +1,3 @@
-
 <?php
 
 include('config.php');
@@ -13,8 +12,20 @@ $home_id=$_SESSION['home_id'];
 <html>
     <head>
         <h3><?php echo $username; ?></h3>
-        <h1><a href="house.php">Home</a></h1>
-        <h1><a href="home.php">Personal</a></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 navtab">
+                    <h1><a href="house.php">Home</a></h1>
+                </div>
+                <div class="col-sm-6 navtab">
+                    <h1><a href="home.php">Personal</a></h1>
+                </div>
+            </div>
+        </div>
+        
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="assets/css/home/home.css">
     </head>
 
     <body>
