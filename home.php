@@ -194,7 +194,7 @@ $home_id=$_SESSION['home_id'];
                         value="<?php echo $descr; ?>" placeholder="Description" required>
                 <label>Amount</label>
                 <input type="number" name="amount" 
-                        value="<?php echo $amount; ?>" placeholder="Amount" required/>
+                        value="<?php echo $amount; ?>" placeholder="Amount" required>
                 <label>Category</label>
                     <select name="category">
                         <option value="Food">Food</option>

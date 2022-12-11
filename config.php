@@ -2,7 +2,7 @@
     $host = "localhost";  
     $user = "root";  
     $password = '';  
-    $db_name = "bachelor expense management";  
+    $db_name = "bachelor_expense_management";  
       
     $con = mysqli_connect($host, $user, $password, $db_name);  
     if(mysqli_connect_errno()) {  
