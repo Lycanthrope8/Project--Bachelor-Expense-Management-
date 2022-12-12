@@ -45,6 +45,7 @@ $home_id=$_SESSION['home_id'];
     <head>
         <h1><a href="home.php">Personal</a></h1>
         <h1><a href="house.php">Home</a></h1>
+        <h3><a href="hometodo.php">Home TODO</a></h3>
     </head>
 
     <body>
@@ -60,6 +61,7 @@ $home_id=$_SESSION['home_id'];
         <!-- Query to show whole data table -->
         <?php
         $result = $con->query("SELECT HExpenseID,username,descr,amount,category,ds,ts FROM homeexpenses WHERE home_id=$home_id ORDER BY HExpenseID DESC");
+        if($result->num_rows > 0){
             ?>
             <div>
                 <!--Creating data table-->
@@ -105,6 +107,9 @@ $home_id=$_SESSION['home_id'];
                     <?php endwhile;?>
                 </table>
             </div>
+        <?php }else{
+        echo "<h3>No Expense Added Yet</h3>";
+        }?>
 
         
         <?php
