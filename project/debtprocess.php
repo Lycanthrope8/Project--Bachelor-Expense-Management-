@@ -13,12 +13,19 @@ include('config.php');
   if(isset($_POST['partialpay'])){
     $debt_id = $_POST['debt_id'];
     $partial = $_POST['partial'];
+   
+    $check = $con->query("SELECT amount FROM userdebtsurplus WHERE debt_id=$debt_id");
+    $row = $check->fetch_array();
+    if ($row['amount']>=$partial){ 
+        $partialpay = "UPDATE userdebtsurplus SET partial_pay=? WHERE debt_id=?";
+        $stmt = $con->prepare($partialpay);     // ???????????????????????
+        $result = $stmt->execute([$partial,$debt_id]);
+        header("Location: home.php");
+      }else{
+        $_SESSION['message'] = "Invalid Amount";
+        header("Location: home.php?=Unseccessful");
+      }
 
-    $partialpay = "UPDATE userdebtsurplus SET partial_pay=? WHERE debt_id=?";
-    $stmt = $con->prepare($partialpay);     // ???????????????????????
-    $result = $stmt->execute([$partial,$debt_id]);
-
-    header("Location: home.php");
   }
 
   // For Full Payment of debtors
