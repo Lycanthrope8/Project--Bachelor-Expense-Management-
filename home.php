@@ -92,7 +92,7 @@ $home_id=$_SESSION['home_id'];
         <!-- User Debt Details -->
 
         <?php
-        $debt = "SELECT debt_id,debtor,creditor,amount,paid,partial_pay FROM userdebtsurplus WHERE debtor='$username'";
+        $debt = "SELECT debt_id,debtor,creditor,descr,amount,paid,partial_pay FROM userdebtsurplus WHERE debtor='$username'";
         $debtresult = $con->query($debt);
         if($debtresult->num_rows > 0){
             echo "<h3>Debts</h3>";
@@ -109,7 +109,7 @@ $home_id=$_SESSION['home_id'];
                         echo "<b>".$row['creditor']."</b>"." : ".$row['amount'].$statement;
                         }
                     else{
-                        echo "<b>".$row['creditor']."</b>"." : ".$row['amount'];
+                        echo "<b>".$row['creditor']."</b>"." : ".$row['amount']." (".$row['descr']." )";
                         ?>  
                         <form action="debtprocess.php" method='POST'>
                             <input type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">

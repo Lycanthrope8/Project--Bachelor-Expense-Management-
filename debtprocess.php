@@ -9,6 +9,7 @@ include('config.php');
 
 <?php
 
+
   // For Partial Payment of debtors
   if(isset($_POST['partialpay'])){
     $debt_id = $_POST['debt_id'];
@@ -41,13 +42,32 @@ include('config.php');
   if(isset($_POST['fullyes'])){
     $debt_id=$_POST['debt_id'];
 
-    $fullyes = "UPDATE userdebtsurplus SET amount=? WHERE debt_id=?";
+///////////////
+/// Debt pay is inserting in userexpenses
+    $debtinfo = $con->query("SELECT creditor, debtor,descr, amount FROM userdebtsurplus WHERE debt_id=$debt_id");
+    $debtinfo = $debtinfo->fetch_assoc();
+
+    $creditor=$debtinfo['creditor'];
+    $debtor=$debtinfo['debtor'];
+    $amounttoadd=$debtinfo['amount'];
+    $descr='Debt pay to '.$creditor.' for '.$debtinfo['descr'];
+    $category='Debt';
+    
+    $addex ="INSERT INTO userexpenses (user_id, username, descr, category, amount) VALUES ((SELECT user_id FROM users WHERE username=?),?,?,?,? )";
+    $stmt = $con->prepare($addex);
+    $result = $stmt->execute([$debtor,$debtor,$descr,$category,$amounttoadd]);
+////////////////////
+
+    $fullyes = "UPDATE userdebtsurplus SET descr=?, amount=? WHERE debt_id=?";
     $stmt = $con->prepare($fullyes);     // ???????????????????????
-    $result = $stmt->execute([0,$debt_id]);
+    $result = $stmt->execute([NULL,0,$debt_id]);
 
     $fullyes = "UPDATE userdebtsurplus SET paid=? WHERE debt_id=?";
     $stmt = $con->prepare($fullyes);     // ???????????????????????
     $result = $stmt->execute([NULL,$debt_id]);
+
+
+
     header("Location: home.php");
 
   }
@@ -66,6 +86,22 @@ include('config.php');
   if(isset($_POST['partialyes'])){
     $debt_id=$_POST['debt_id'];
     $partial_pay=$_POST['partial_pay'];
+
+    ///////////////
+    /// Debt pay is inserting in userexpenses
+    $debtinfo = $con->query("SELECT creditor, debtor,descr, amount FROM userdebtsurplus WHERE debt_id=$debt_id");
+    $debtinfo = $debtinfo->fetch_assoc();
+
+    $creditor=$debtinfo['creditor'];
+    $debtor=$debtinfo['debtor'];
+    $amounttoadd=$partial_pay;
+    $descr='Partial Debt pay to '.$creditor.' for '.$debtinfo['descr'];
+    $category='Debt';
+
+    $addex ="INSERT INTO userexpenses (user_id, username, descr, category, amount) VALUES ((SELECT user_id FROM users WHERE username=?),?,?,?,? )";
+    $stmt = $con->prepare($addex);
+    $result = $stmt->execute([$debtor,$debtor,$descr,$category,$amounttoadd]);
+    ////////////////////
 
     ///Updating Amount
     $partialyes = "UPDATE userdebtsurplus SET amount=amount-$partial_pay WHERE debt_id=?";
