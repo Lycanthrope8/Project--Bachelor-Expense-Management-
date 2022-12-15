@@ -92,7 +92,7 @@ $home_id=$_SESSION['home_id'];
                             <td> <?php echo $row['category']; ?> </td>
                             <td> <?php echo $row['ds']; ?> </td>
                             <td> <?php echo $row['ts']; ?> </td>
-                            <?php if($row['username']===$username){?>
+                            <?php if($row['username']===$username || $row['username']==="Everyone"){?>
                                 <td>
                                     <a href="house.php?edit=<?php echo $row['HExpenseID']; ?>"
                                         >Edit</a>
@@ -127,6 +127,15 @@ $home_id=$_SESSION['home_id'];
         <form action="processhome.php" method="POST">
             <div class="container">
                 <input type="hidden" name="HExpenseID" value="<?php echo $HExpenseID ?>">
+                <!-- <?php 
+                if ($everyone === false){
+                ?>
+                    <button><a href="house.php?everyone=>">Self</a></button>
+                <?php
+                }else{
+                ?>
+                    <button><a href="house.php?everyone=>">Everyone</a></button>
+                <?php } ?> -->
                 <label>Description</label>
                 <input type="text" name="descr" 
                         value="<?php echo $descr; ?>" placeholder="Description" required>
@@ -141,12 +150,16 @@ $home_id=$_SESSION['home_id'];
                         <option value="Entertainment">Entertainment</option>
                         <option value="Others">Others</option>
                     </select>
+                
+                
                 <?php 
                 if ($update == true):
                 ?>
+
                     <button type="submit" name="update">Update</button>
                 <?php else: ?>
                     <button type="submit" name="add">ADD</button>
+                    <button type="submit" name="addevery"> Add As Everyone Paid</button>
                 <?php endif; ?>
             </div>
         </form>
