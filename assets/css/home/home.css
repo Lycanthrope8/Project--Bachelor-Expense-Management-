@@ -175,7 +175,7 @@ h3 {
   font-size: 0.8rem;
 }
 .infotable .tab-items {
-  background-color: rgba(0, 255, 255, 0.25);
+  background-color: rgba(190, 190, 190, 0.25);
   padding: 1rem 2rem;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   text-align: center;
@@ -183,6 +183,9 @@ h3 {
 .infotable .tab-items a {
   color: white;
   text-decoration: none;
+}
+.infotable .tab-items:nth-child(even) {
+  background-color: gray;
 }
 
 .button {

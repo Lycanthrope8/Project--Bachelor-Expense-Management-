@@ -162,7 +162,7 @@ h3{
         font-size: 0.8rem;
     }
     .tab-items{
-        background-color: rgba($color: cyan, $alpha: 0.25);
+        background-color: rgba($color: rgb(190, 190, 190), $alpha: 0.25);
         padding: 1rem 2rem;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         text-align: center;
@@ -170,6 +170,9 @@ h3{
             color: white;
             text-decoration: none;
         }
+    }
+    .tab-items:nth-child(even){
+        background-color: gray;
     }
 }
 // .tab-head{

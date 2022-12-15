@@ -220,7 +220,7 @@ $home_id=$_SESSION['home_id'];
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <input class="form-input" type="number" name="amount" value="<?php echo $amount; ?>" required>
+                            <input class="form-input" type="number" name="amount" min="0" value="<?php echo $amount; ?>" required>
                             <label class="form-label" for="amount">Amount</label>
                         </div>
                     </div>
