@@ -1,30 +1,37 @@
+
 <?php
 
 include('config.php');
 include('login.php');
 
 $username=$_SESSION['username'];
-$user_pexpenses=$username.'_Pexpenses';
+$user_id=$_SESSION['user_id'];
+$home_id=$_SESSION['home_id'];
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <h3><?php echo $username; ?></h3>
+        <h3>Welcome, <?php echo $username; ?>!</h3>
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 navtab">
-                    <h1><a href="house.php">Home</a></h1>
+                <div class="col-sm-4"><a href="house.php">
+                    <h1>Home</h1>
+                </a>
                 </div>
-                <div class="col-sm-6 navtab">
+                
+                <div class="col-sm-4">
                     <h1><a href="home.php">Personal</a></h1>
+                </div>
+                <div class="col-sm-4">
+                    <h1><a href="todo.php">To Do</a></h1>
                 </div>
             </div>
         </div>
         
-
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="assets/css/home/home.css">
+        <script src="https://kit.fontawesome.com/ee60cebb6c.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -105,7 +112,7 @@ $user_pexpenses=$username.'_Pexpenses';
                         echo "<b>".$row['creditor']."</b>"." : ".$row['amount'].$statement;
                         }
                     else{
-                        echo "<b>".$row['creditor']."</b>"." : ".$row['amount'];
+                        echo "<b>".$row['creditor']."</b>"." : ".$row['amount']." (".$row['descr']." )";
                         ?>  
                         <form action="debtprocess.php" method='POST'>
                             <input type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">
@@ -128,19 +135,22 @@ $user_pexpenses=$username.'_Pexpenses';
         <!-- Query to show whole data table of expenses -->
         <?php
         $result = $con->query("SELECT UExpenseID,HExpenseID,descr,amount,category,ds,ts FROM userexpenses WHERE user_id=$user_id ORDER BY UExpenseID DESC");
+        if($result->num_rows > 0){
             ?>
-            <div>
+            <div class="container">
                 <!--Creating data table-->
-                <table>
+                <div class="row">
+                <table class="infotable col-sm-12">
+                </div>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th colspan='2'>Action</th>
+                            <th class="tab-head">ID</th>
+                            <th class="tab-head">Description</th>
+                            <th class="tab-head">Amount</th>
+                            <th class="tab-head">Category</th>
+                            <th class="tab-head">Date</th>
+                            <th class="tab-head">Time</th>
+                            <th class="tab-head" colspan='2'>Action</th>
                         </tr>
                     </thead>
                     <!--Loop to see the fetched data table-->
@@ -150,26 +160,40 @@ $user_pexpenses=$username.'_Pexpenses';
                     ?>
                                              
                         <tr>
-                            <td> <?php echo $row['UExpenseID']; ?> </td>
-                            <td> <?php echo $row['descr']; ?> </td>
-                            <td> <?php echo $row['amount']; ?> </td>
-                            <td> <?php echo $row['category']; ?> </td>
-                            <td> <?php echo $row['ds']; ?> </td>
-                            <td> <?php echo $row['ts']; ?> </td>
-                            <td>
-                                <?php if($row['HExpenseID']==NULL){?>
-                                <a href="home.php?edit=<?php echo $row['UExpenseID']; ?>"
-                                    >Edit</a>
-                                <a href="process.php?delete=<?php echo $row['UExpenseID']; ?>"
-                                    >Delete</a>
+                            <td class="tab-items"> <?php echo $row['UExpenseID']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['descr']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['amount']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['category']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['ds']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['ts']; ?> </td>
+                            <td class="tab-items">
+                                <div class="row">
+                                    <?php if($row['HExpenseID']==NULL){?>
+                                    <div class="col-sm-6">
+                                        <a href="home.php?edit=<?php echo $row['UExpenseID']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="process.php?delete=<?php echo $row['UExpenseID']; ?>"><i class="fa-solid fa-trash"></i></a> 
+                                    </div>  
+                                    <?php } ?>    
+                                </div>
                             </td>
                         </tr>
                     
                             
                     <!--Ending the Loop-->
-                    <?php endwhile;?>
+                    <?php endwhile; ?>
                 </table>
             </div>
+        <?php }else{
+            echo "<h3>No Expense Added Yet</h3>";
+        }?>
+
+        <?php
+             $total = $con->query("SELECT SUM(amount) as totalamount FROM userexpenses WHERE user_id=$user_id");
+             $totalamount = $total->fetch_assoc();
+        ?>
+        <h3>Total Spent: <?php echo $totalamount['totalamount'] ?></h3>
 
         
         <?php
@@ -217,15 +241,45 @@ $user_pexpenses=$username.'_Pexpenses';
                                 <option value="Housing">Housing</option>
                                 <option value="Entertainment">Entertainment</option>
                                 <option value="Others">Others</option>
-                    </select>
-                <?php 
-                if ($update == true):
-                ?>
-                    <button type="submit" name="update">Update</button>
-                <?php else: ?>
-                    <button type="submit" name="add">ADD</button>
-                <?php endif; ?>
+                            </select> -->
+                            <div class="option">
+                                <div onclick="show('Food')">Food</div>
+                                <div onclick="show('Transportation')">Transportation</div>
+                                <div onclick="show('Housing')">Housing</div>
+                                <div onclick="show('Entertainment')">Entertainment</div>
+                                <div onclick="show('Others')">Others</div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
+                    if ($update == true):
+                    ?>
+                    <div class="col-sm-2">
+                        <button class="button update-btn" type="submit" name="update">Update</button>
+                    </div>
+                    <?php else: ?>
+                    <div class="col-sm-2">
+                        <button class="button add-btn" type="submit" name="add">ADD</button>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                
+                
+                <div class="row">    
+                    
+                    
+                </div>
             </div>
         </form>
+        <script>
+            function show(anything){
+                document.querySelector('.textBox').value=anything;
+            }
+            let dropdown=document.querySelector('.dropdown');
+            dropdown.onclick=function(){
+                dropdown.classList.toggle('active');
+            }
+
+        </script>
     </body>
 </html>

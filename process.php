@@ -4,23 +4,25 @@
 include('config.php');
 include('login.php');
 $username=$_SESSION['username'];
-$user_pexpenses=$username.'_Pexpenses';
-$PexpenseID=0;
+$user_id=$_SESSION['user_id'];
+$UExpenseID=0;
 $update=false;
 $descr = '';
 $amount = '';
+$category = '';
 
 if(isset($_POST['add'])){
     $descr = $_POST['descr'];
     $amount = $_POST['amount'];
+    $category = $_POST['category'];
 
     
 
 
     // $con->query("INSERT INTO $user_pexpenses (descr,amount,ds,ts) VALUES($descr,$amount,getdate(),getdate())");
-    $addsql = "INSERT INTO $user_pexpenses (descr,amount,ds,ts) VALUES(?,?,?,?)";
+    $addsql = "INSERT INTO userexpenses (user_id,username,descr,amount,category) VALUES(?,?,?,?,?)";
     $stmtadd = $con->prepare($addsql);     // ???????????????????????
-    $result = $stmtadd->execute([$descr,$amount,getdate(),gettimeofday()]); 
+    $result = $stmtadd->execute([$user_id,$username,$descr,$amount,$category]); 
     
     $_SESSION['message'] = "Record Has Been Saved";
     $_SESSION['msg_type'] = "Success";
@@ -28,9 +30,9 @@ if(isset($_POST['add'])){
 }
 
 if(isset($_GET['delete'])){
-    $PexpenseID = $_GET['delete'];
+    $UExpenseID = $_GET['delete'];
 
-    $con->query("DELETE FROM $user_pexpenses where PexpenseID=$PexpenseID");
+    $con->query("DELETE FROM userexpenses where UExpenseID=$UExpenseID");
 
     $_SESSION['message'] = "Record Has Been Deleted";
     $_SESSION['msg_type'] = "Danger";
@@ -39,12 +41,13 @@ if(isset($_GET['delete'])){
 
 if(isset($_GET['edit'])){
     
-    $PexpenseID = $_GET['edit'];
-    $result = $con->query("SELECT * FROM $user_pexpenses WHERE PexpenseID=$PexpenseID");
+    $UExpenseID = $_GET['edit'];
+    $result = $con->query("SELECT descr,amount,category FROM userexpenses WHERE UExpenseID=$UExpenseID");
     $update=true;
     $row = $result->fetch_array();
     $descr = $row['descr'];
     $amount = $row['amount'];
+    $category = $row['category'];
     // if (count($result)==1){
     //     $row = $result->fetch_array();
     //     $descr = $row['descr'];
@@ -54,14 +57,14 @@ if(isset($_GET['edit'])){
 }
 
 if (isset($_POST['update'])){
-    $PexpenseID = $_POST['PexpenseID'];
+    $UExpenseID = $_POST['UExpenseID'];
     $descr = $_POST['descr'];
     $amount = $_POST['amount'];
+    $category = $_POST['category'];
 
-    $result = $con->query("UPDATE $user_pexpenses SET descr='$descr',amount=$amount WHERE PexpenseID=$PexpenseID");
+    $result = $con->query("UPDATE userexpenses SET descr='$descr',amount=$amount, category='$category' WHERE UExpenseID=$UExpenseID");
     $_SESSION['message'] = "Record has been updated";
     $_SESSION['msg_type'] = 'warning';
     header("Location: home.php?=Successfully Updated");
 }
 ?>
-
