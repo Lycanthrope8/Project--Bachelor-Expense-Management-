@@ -43,6 +43,39 @@ $home_id=$_SESSION['home_id'];
 <!DOCTYPE html>
 <html>
     <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+            ['Category', 'Amount'],
+            <?php
+            $query="SELECT category, SUM(amount)  AS amount FROM homeexpenses WHERE home_id=$home_id GROUP BY category";
+            $exec=mysqli_query($con,$query);
+            while($row=mysqli_fetch_array($exec) ){
+                echo "['".$row['category']."',".$row['amount']."],";
+            } 
+            ?>
+            ]);
+
+            var options = {
+            legend: 'none',
+            pieSliceText:'label',
+            pieStartAngle:100,
+            title: 'Home Expenses Chart',
+            pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
+        </script>
+
+
+
+
+
         <h1><a href="home.php">Personal</a></h1>
         <h1><a href="house.php">Home</a></h1>
         <h3><a href="hometodo.php">Home TODO</a></h3>
@@ -163,5 +196,10 @@ $home_id=$_SESSION['home_id'];
                 <?php endif; ?>
             </div>
         </form>
+    
+
+
+
+        <div id="donutchart" style="width: 900px; height: 500px;"></div>
     </body>
 </html>

@@ -9,6 +9,16 @@ $user_id=$_SESSION['user_id'];
 $home_id=$_SESSION['home_id'];
 ?>
 
+
+
+
+<?php
+// $pie = $con->query("SELECT category, SUM(amount)  AS amount FROM userexpenses WHERE user_id=$user_id GROUP BY category");
+// $makepie = $pie->fetch_assoc();
+
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,6 +42,36 @@ $home_id=$_SESSION['home_id'];
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="assets/css/home/home.css">
         <script src="https://kit.fontawesome.com/ee60cebb6c.js" crossorigin="anonymous"></script>
+        <!-- Chart Script -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+            ['Category', 'Amount'],
+            <?php
+            $query="SELECT category, SUM(amount)  AS amount FROM userexpenses WHERE user_id=$user_id GROUP BY category";
+            $exec=mysqli_query($con,$query);
+            while($row=mysqli_fetch_array($exec) ){
+                echo "['".$row['category']."',".$row['amount']."],";
+            } 
+            ?>
+            ]);
+
+            var options = {
+            legend: 'none',
+            pieSliceText:'label',
+            pieStartAngle:100,
+            title: 'Personal Expenses Chart',
+            pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
+        </script>
+
     </head>
 
     <body>
@@ -245,9 +285,13 @@ $home_id=$_SESSION['home_id'];
                             <div class="option">
                                 <div onclick="show('Food')">Food</div>
                                 <div onclick="show('Transportation')">Transportation</div>
-                                <div onclick="show('Housing')">Housing</div>
+                                <div onclick="show('Medical')">Medical</div>
+                                <div onclick="show('Education')">Education</div>
                                 <div onclick="show('Entertainment')">Entertainment</div>
+                                <div onclick="show('Clothes')">Clothes</div>
+                                <div onclick="show('Miscellaneous')">Miscellaneous</div>
                                 <div onclick="show('Others')">Others</div>
+                                
                             </div>
                         </div>
                     </div>
@@ -281,5 +325,7 @@ $home_id=$_SESSION['home_id'];
             }
 
         </script>
+        
+        <div id="donutchart" style="width: 900px; height: 500px;"></div>
     </body>
 </html>
