@@ -15,11 +15,9 @@ $home_id=$_SESSION['home_id'];
         <h3>Welcome, <?php echo $username; ?>!</h3>
         <div class="container">
             <div class="row">
-                <div class="col-sm-4"><a href="house.php">
-                    <h1>Home</h1>
-                </a>
+                <div class="col-sm-4">
+                    <h1><a href="house.php">Home</a></h1>
                 </div>
-                
                 <div class="col-sm-4">
                     <h1><a href="home.php">Personal</a></h1>
                 </div>
@@ -31,7 +29,6 @@ $home_id=$_SESSION['home_id'];
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="assets/css/home/home.css">
-        <script src="https://kit.fontawesome.com/ee60cebb6c.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -167,28 +164,25 @@ $home_id=$_SESSION['home_id'];
                             <td class="tab-items"> <?php echo $row['ds']; ?> </td>
                             <td class="tab-items"> <?php echo $row['ts']; ?> </td>
                             <td class="tab-items">
-                                <div class="row">
-                                    <?php if($row['HExpenseID']==NULL){?>
-                                    <div class="col-sm-6">
-                                        <a href="home.php?edit=<?php echo $row['UExpenseID']; ?>"><i class="fa-solid fa-pen"></i></a>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <a href="process.php?delete=<?php echo $row['UExpenseID']; ?>"><i class="fa-solid fa-trash"></i></a> 
-                                    </div>  
-                                    <?php } ?>    
-                                </div>
+                                <?php if($row['HExpenseID']==NULL){?>
+                                <a href="home.php?edit=<?php echo $row['UExpenseID']; ?>"
+                                    >Edit</a>
+                                <a href="process.php?delete=<?php echo $row['UExpenseID']; ?>"
+                                    >Delete</a>    
+                                <?php } ?>    
+                                
                             </td>
                         </tr>
                     
                             
                     <!--Ending the Loop-->
-                    <?php endwhile; ?>
+                    <?php endwhile;?>
                 </table>
             </div>
         <?php }else{
             echo "<h3>No Expense Added Yet</h3>";
         }?>
-
+        
         <?php
              $total = $con->query("SELECT SUM(amount) as totalamount FROM userexpenses WHERE user_id=$user_id");
              $totalamount = $total->fetch_assoc();

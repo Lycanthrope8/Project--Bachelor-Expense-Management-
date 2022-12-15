@@ -113,12 +113,6 @@ $home_id=$_SESSION['home_id'];
 
         
         <?php
-             $total = $con->query("SELECT SUM(amount) as totalamount FROM homeexpenses WHERE home_id=$home_id");
-             $totalamount = $total->fetch_assoc();
-        ?>
-        <h3>Total Spent: <?php echo $totalamount['totalamount'] ?></h3>
-        
-        <?php
         //function to print fetched array
         // function pre_r($array){
         //     echo '<pre>';
