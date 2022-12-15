@@ -77,32 +77,45 @@ if (isset($_POST['homename']) && isset($_POST['securitycode'])) {
 
     <title>LOGIN</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/joinhome/joinhome.css">
 </head>
 
 <body>
 
-     <form action="joinhome.php" method="POST">
+    <form action="joinhome.php" method="POST">
 
-        <h2>Join Home</h2>
+        <h1>Join Home</h1>
 
         <?php if (isset($_GET['error'])) { ?>
 
             <p class="error"><?php echo $_GET['error']; ?></p>
 
         <?php } ?>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <input class="form-input" type="text" name="homename" required>
+                        <label class="form-label" for="homename">Home Name</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <input class="form-input" type="password" name="securitycode" required> 
+                        <label class="form-label" for="securitycode">Security Code</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
 
-        <label>Home Name</label>
-
-        <input type="text" name="homename" placeholder="homename"><br>
-
-        <label>Security Code</label>
-
-        <input type="pass" name="securitycode" placeholder="Security Code"><br> 
-
-        <button type="submit">Join</button>
-        <button type="submit"><a href="createhome.php">Create Home</a></button>
+        <button class="button" type="submit">Join</button>
+        <button class="button" type="submit"><a href="createhome.php">Create Home</a></button>
 
      </form>
 

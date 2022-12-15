@@ -43,13 +43,13 @@ if(isset($_POST['add'])){
         
         $debtsurplus = $con->query("SELECT creditor,debtor FROM userdebtsurplus WHERE debtor='$member' AND creditor='$username'");
         if($debtsurplus->num_rows == 0) {
-            $adddebtsurplusquery ="INSERT INTO userdebtsurplus (home_id,creditor,debtor,amount) VALUES (?,?,?,?)";
+            $adddebtsurplusquery ="INSERT INTO userdebtsurplus (home_id,creditor,debtor,descr,amount) VALUES (?,?,?,?,?)";
             $adddebtsurplusprepare = $con->prepare($adddebtsurplusquery);
-            $adddebtsurplus = $adddebtsurplusprepare->execute([$home_id,$username,$member,$amount/$member_count]);
+            $adddebtsurplus = $adddebtsurplusprepare->execute([$home_id,$username,$member,$descr,$amount/$member_count]);
         } else {
-            $updatedebtsurplusquery = "UPDATE userdebtsurplus SET amount=amount+(?) WHERE debtor=?";
+            $updatedebtsurplusquery = "UPDATE userdebtsurplus SET amount=amount+(?), descr=CONCAT(descr,',',?) WHERE debtor=?";
             $updatedebtsurplusprepare = $con->prepare($updatedebtsurplusquery);
-            $updatedebtsurplus = $updatedebtsurplusprepare->execute([$amount/$member_count,$member]);
+            $updatedebtsurplus = $updatedebtsurplusprepare->execute([$amount/$member_count,$descr,$member]);
         }
     }
 
