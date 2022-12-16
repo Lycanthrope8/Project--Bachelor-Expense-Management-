@@ -70,10 +70,11 @@ p {
 //     transform: translateX(1em) scale(0.8);
 // }
 .form-submit {
+    margin-bottom: 5px;
     width: 100%;
     background: rgb(68, 68, 68);
     color: rgb(255, 255, 255);
-    padding: 10px 20px;
+    padding: 15px 20px;
     font-weight: bold;
     font-size: larger;
     border: none;
@@ -83,6 +84,10 @@ p {
     cursor: pointer;
     &:hover {
         background: rgba($color: cyan, $alpha: 0.75);
+    }
+    a {
+        color: white;
+        text-decoration: none;
     }
 }
 .form-label {
@@ -106,6 +111,7 @@ p {
     background: rgb(53, 53, 53);
     border-radius: 5px;
 }
+
 // .form-group:active .form-label{
 //     position: relative;
 //     color: cyan;
@@ -131,4 +137,24 @@ p {
 // .form-group, .form-input:valid ~ .form-label,
 // .form-group, .form-input:focus ~ .form-label{
 //     color: red;
+// }
+// button {
+//     width: 100%;
+//     margin-bottom: 10px;
+//     background: rgb(68, 68, 68);
+//     color: rgb(255, 255, 255);
+//     padding: 10px 20px;
+//     font-weight: bold;
+//     font-size: larger;
+//     border: none;
+//     border-radius: 5pt;
+//     transition: 0.5s;
+//     cursor: pointer;
+//     &:hover {
+//         background: rgba($color: cyan, $alpha: 0.75);
+//     }
+//     a {
+//         color: white;
+//         text-decoration: none;
+//     }
 // }

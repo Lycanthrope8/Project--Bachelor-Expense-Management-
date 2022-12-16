@@ -84,60 +84,63 @@ include('config.php');
                 
 
                 <!-- For Last Name-->
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <input class="form-input" type="text" name="lastname" required>
-                                <label class="form-label" for="lastname">Last Name</label>
-                            </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input class="form-input" type="text" name="lastname" required>
+                            <label class="form-label" for="lastname">Last Name</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For Email-->
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <input class="form-input" type="email" name="email" required>
-                                <label class="form-label" for="email">Email Address</label>
-                            </div>
+                    <!-- For Email-->
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input class="form-input" type="email" name="email" required>
+                            <label class="form-label" for="email">Email Address</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For Phone number-->
-                        <div class="com-sm-12">
-                            <div class="form-group">
-                                <input class="form-input" type="text" name="phone" required>
-                                <label class="form-label" for="phone">Phone Number</label>
-                            </div>
+                    <!-- For Phone number-->
+                    <div class="com-sm-12">
+                        <div class="form-group">
+                            <input class="form-input" type="text" name="phone" required>
+                            <label class="form-label" for="phone">Phone Number</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For User Name-->
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <input class="form-input" type="text" name="username" required>
-                                <label class="form-label" for="username">User Name</label>
-                            </div>
+                    <!-- For User Name-->
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input class="form-input" type="text" name="username" required>
+                            <label class="form-label" for="username">User Name</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For Password-->
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input class="form-input" type="password" name="pass" required>
-                                <label class="form-label" for="pass">Password</label>
-                            </div>
+                    <!-- For Password-->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input class="form-input" type="password" name="pass" required>
+                            <label class="form-label" for="pass">Password</label>
                         </div>
+                    </div>
 
-                        <!-- For Password-->
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input class="form-input" type="password" name="confirmpass" required>
-                                <label class="form-label" for="confirmpass">Confirm pass</label>
-                            </div>
+                    <!-- For Password-->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input class="form-input" type="password" name="confirmpass" required>
+                            <label class="form-label" for="confirmpass">Confirm pass</label>
                         </div>
+                    </div>
+                    <input class="form-submit" type="submit" id="register" name="register" value="Sign Up">
                 </div>
-                <input class="form-submit" type="submit" id="register" name="register" value="Sign Up">
             </div>
         </form>
+        <div class="login">
+        <button class="form-submit" type="submit"><a href="index.php">Login</a></button>
+        </div>
     </div>
     <script>
         $('.form-input').hover(function(){

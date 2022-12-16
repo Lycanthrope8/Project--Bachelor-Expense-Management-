@@ -15,16 +15,15 @@ $home_id=$_SESSION['home_id'];
         <h3>Welcome, <?php echo $username; ?>!</h3>
         <div class="container">
             <div class="row">
-                <div class="col-sm-4"><a href="house.php">
-                    <h1>Home</h1>
-                </a>
+                <div class="col-sm-4">
+                    <a href="house.php"><h1>Home</h1></a>
                 </div>
                 
                 <div class="col-sm-4">
-                    <h1><a href="home.php">Personal</a></h1>
+                    <a href="home.php"><h1 class="personal">Personal</h1></a>
                 </div>
                 <div class="col-sm-4">
-                    <h1><a href="todo.php">To Do</a></h1>
+                    <a href="todo.php"><h1>To Do</h1></a>
                 </div>
             </div>
         </div>
@@ -32,6 +31,38 @@ $home_id=$_SESSION['home_id'];
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="assets/css/home/home.css">
         <script src="https://kit.fontawesome.com/ee60cebb6c.js" crossorigin="anonymous"></script>
+
+        <!-- Chart Script -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Category', 'Amount'],
+                <?php
+                $query="SELECT category, SUM(amount)  AS amount FROM userexpenses WHERE user_id=$user_id GROUP BY category";
+                $exec=mysqli_query($con,$query);
+                while($row=mysqli_fetch_array($exec) ){
+                    echo "['".$row['category']."',".$row['amount']."],";
+                } 
+                ?>
+            ]);
+
+            var options = {
+                backgroundColor: 'transparent',
+                legend: "none",
+                pieSliceText: "label",
+                pieSliceBorderColor: "none",
+                pieStartAngle: 100,
+                // title: 'Personal Expenses Chart',
+                pieHole: 0.5,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
+        </script>
     </head>
 
     <body>
@@ -61,23 +92,43 @@ $home_id=$_SESSION['home_id'];
                         echo "<b>".$row['debtor']."</b>"." : ".$row['amount'].$statement;
                         ?>
                         <form action="debtprocess.php" method="POST">
-                            <input type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">
-                            <button type="submit" name="fullyes">YES</button>
-                            <button type="submit" name="fullno">NO</button>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <input type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn-yes" type="submit" name="fullyes">YES</button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn-no" type="submit" name="fullno">NO</button>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
-                    <?php
-                    }
-                    elseif($row['partial_pay']!=NULL){
-                        $partial_pay=$row['partial_pay'];
-                        $statement=" (Did ".$row['debtor']." Paid You TK ".$row['partial_pay']."?) ";
-                        echo "<b>".$row['debtor']."</b>"." : ".$row['amount'].$statement;
-                        ?>
-                        <form action="debtprocess.php" method="POST">
-                            <input type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">
-                            <input type="hidden" id="partial_pay" name="partial_pay" value="<?php echo $partial_pay; ?>">
-                            <button type="submit" name="partialyes">YES</button>
-                            <button type="submit" name="partialno">NO</button>
-                        </form>
+                    
+                            
+                                <?php
+                                }
+                                elseif($row['partial_pay']!=NULL){
+                                    $partial_pay=$row['partial_pay'];
+                                    $statement=" (Did ".$row['debtor']." Paid You TK ".$row['partial_pay']."?) ";
+                                    echo "<b>".$row['debtor']."</b>"." : ".$row['amount'].$statement;
+                                    ?>
+                            <div style="display:inline-block; width:45%; margin:auto;">
+                            <form action="debtprocess.php" method="POST">
+                            <!-- <div class="container"> -->
+                                <!-- <div class="row"> -->
+                                <input class="form-input" type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">
+                                <!-- <div> -->
+                                    <input class="form-input" type="hidden" id="partial_pay" name="partial_pay" value="<?php echo $partial_pay; ?>">
+                                <!-- </div> -->
+                                    <button class="btn-yes" type="submit" name="partialyes">YES</button>
+                                    <button class="btn-no" type="submit" name="partialno">NO</button>
+                                <!-- </div> -->
+                             <!-- </div> -->
+                            </form>
+                            </div>
                         <?php
                     }
                     else{
@@ -114,11 +165,23 @@ $home_id=$_SESSION['home_id'];
                     else{
                         echo "<b>".$row['creditor']."</b>"." : ".$row['amount']." (".$row['descr']." )";
                         ?>  
-                        <form action="debtprocess.php" method='POST'>
-                            <input type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">
-                            <input type="number" name="partial">
-                            <button type="submit" name="partialpay">Pay</button>
-                            <button type="submit" name="fullpay"> Full Pay</button>
+                        <form class="payform" action="debtprocess.php" method='POST'>
+                            <div class="container">
+                                <div class="row">
+                                    <input class="form-input" type="hidden" id="debt_id" name="debt_id" value="<?php echo $debt_id; ?>">
+                                    <div class="col-sm-4">
+                                        <input class="form-input" type="number" name="partial">
+
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn-pay" type="submit" name="partialpay">Pay</button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn-fullpay" type="submit" name="fullpay">Full Pay</button>
+
+                                    </div>
+                                </div>
+                            </div>
                         </form>
 
                     <?php
@@ -194,7 +257,7 @@ $home_id=$_SESSION['home_id'];
              $totalamount = $total->fetch_assoc();
         ?>
         <h3>Total Spent: <?php echo $totalamount['totalamount'] ?></h3>
-
+        
         
         <?php
         //function to print fetched array
@@ -207,15 +270,15 @@ $home_id=$_SESSION['home_id'];
 
 
 
-        <!--ADD Amount Form -->
-        <form action="process.php" method="POST">
-            <div class="container">
-                <input type="hidden" name="UExpenseID" value="<?php echo $UExpenseID ?>">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <input class="form-input" type="text" name="descr" value="<?php echo $descr ?>" required>
-                            <label class="form-label" for="descr">Description</label>
+<!--ADD Amount Form -->
+<form action="process.php" method="POST">
+    <div class="container">
+        <input type="hidden" name="UExpenseID" value="<?php echo $UExpenseID ?>">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <input class="form-input" type="text" name="descr" value="<?php echo $descr; ?>" required>
+                    <label class="form-label" for="descr">Description</label>
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -234,7 +297,7 @@ $home_id=$_SESSION['home_id'];
                         <div class="dropdown form-group">
                             <!-- <label class="form-label" for="category">Category</label> -->
                             <input type="text" class="textBox form-input" name="category" readonly>
-                            <label class="form-label" for="category">Category</label>
+                            <label class="form-label-cat" for="category">Category</label>
                             <!-- <select name="category">
                                 <option value="Food">Food</option>
                                 <option value="Transportation">Transportation</option>
@@ -243,43 +306,58 @@ $home_id=$_SESSION['home_id'];
                                 <option value="Others">Others</option>
                             </select> -->
                             <div class="option">
-                                <div onclick="show('Food')">Food</div>
-                                <div onclick="show('Transportation')">Transportation</div>
-                                <div onclick="show('Housing')">Housing</div>
-                                <div onclick="show('Entertainment')">Entertainment</div>
-                                <div onclick="show('Others')">Others</div>
+                                <div class="options" onclick="show('Food')">Food</div>
+                                <div class="options" onclick="show('Transportation')">Transportation</div>
+                                <div class="options" onclick="show('Medical')">Medical</div>
+                                <div class="options" onclick="show('Education')">Education</div>
+                                <div class="options" onclick="show('Entertainment')">Entertainment</div>
+                                <div class="options" onclick="show('Clothings')">Clothings</div>
+                                <div class="options" onclick="show('Others')">Others</div>
                             </div>
                         </div>
                     </div>
+                    
                     <?php 
                     if ($update == true):
-                    ?>
-                    <div class="col-sm-2">
-                        <button class="button update-btn" type="submit" name="update">Update</button>
-                    </div>
-                    <?php else: ?>
+                        ?>
+                
+                <div class="col-sm-2">
+                    <button class="button update-btn" type="submit" name="update">Update</button>
+                </div>
+                
+                <?php else: ?>
                     <div class="col-sm-2">
                         <button class="button add-btn" type="submit" name="add">ADD</button>
                     </div>
                     <?php endif; ?>
                 </div>
-                
-                
-                <div class="row">    
-                    
-                    
-                </div>
             </div>
         </form>
         <script>
+            // let options = document.querySelectorAll('.option > .options');
+            // for (let elem of options) {
+                //     elem.onclick=function(){
+                    //         document.querySelector('.form-label-cat').classList.add('input-valid');
+                    //         function show(anything){
+                        //             document.querySelector('.textBox').value=anything;
+                        //         }
+            //     }
+            // }
             function show(anything){
                 document.querySelector('.textBox').value=anything;
+                document.querySelector('.form-label-cat').classList.add('input-valid');
             }
-            let dropdown=document.querySelector('.dropdown');
-            dropdown.onclick=function(){
-                dropdown.classList.toggle('active');
+            
+            document.querySelector('.dropdown').onclick=function(){
+                document.querySelector('.dropdown').classList.toggle('active');
             }
-
-        </script>
+            
+            </script>
+            <div class="graph container">
+                <div id="donutchart" class="col-xs-12 col-sm-6 col-md-4">
+                    <div id="chart"></div>
+                    <div id="labelOverlay"><h3>Total Spent</h3></div>
+                </div>
+            </div>
     </body>
-</html>
+    </html>

@@ -1,21 +1,4 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  text-align: center;
-}
-
-.personal {
+.home {
   background-color: #ff692e !important;
 }
 
@@ -24,6 +7,8 @@ h1 {
   padding: 10px;
   border-radius: 5px;
   transition: 0.2s;
+  text-align: center;
+  margin-bottom: 30px;
   cursor: pointer;
 }
 h1:hover {
@@ -38,14 +23,6 @@ a {
 }
 a:hover {
   color: white;
-}
-
-h3 {
-  z-index: 100;
-  color: rgb(255, 30, 30);
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  text-align: center;
-  margin: 20px 0px;
 }
 
 .form-group {
@@ -156,7 +133,6 @@ h3 {
 }
 
 .dropdown .option {
-  z-index: 10000;
   position: absolute;
   top: 36px;
   width: 100%;
@@ -191,13 +167,14 @@ h3 {
   border-collapse: collapse;
   padding: 10px;
   background-color: rgb(255, 255, 255);
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   overflow: hidden;
 }
 .infotable .tab-head {
   background-color: #343a40;
   color: white;
   padding: 1rem 2rem;
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   font-size: 0.8rem;
@@ -212,13 +189,10 @@ h3 {
   text-decoration: none;
 }
 .infotable .tab-items i {
-  color: rgb(69, 69, 69);
+  color: black;
 }
 .infotable tr:nth-child(even) {
-  background-color: rgb(69, 69, 69);
-  color: white;
-}
-.infotable tr:nth-child(even) i {
+  background-color: rgba(52, 58, 64, 0.85);
   color: white;
 }
 
@@ -252,122 +226,30 @@ h3 {
   background-color: rgb(228, 148, 0);
 }
 
-#donutchart, #chart {
-  height: 500px;
-  width: 500px;
-  font-family: Arial;
-}
-
 #donutchart {
   position: relative;
 }
 
+#donutchart, #chart {
+  height: 300px;
+  width: 400px;
+  font-family: Arial;
+}
+
 #labelOverlay {
-  z-index: 10000;
+  width: 90px;
+  height: 45px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 16px;
-  line-height: 100px;
-  vertical-align: middle;
+  top: 233px;
+  left: 205px;
   text-align: center;
-  color: #a2ccef;
-}
-
-.payform .container {
-  margin: 20px;
-}
-
-.btn-pay {
-  width: 100%;
-  margin-bottom: 10px;
-  background: rgb(69, 69, 69);
-  color: rgb(255, 255, 255);
-  padding: 10px 20px;
-  text-align: center;
-  font-weight: bold;
-  font-size: larger;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
   cursor: pointer;
 }
-.btn-pay:hover {
-  color: rgb(69, 69, 69);
-  background: rgba(0, 255, 255, 0.75);
-}
 
-.btn-fullpay {
-  width: 100%;
-  margin-bottom: 10px;
-  background: rgb(69, 69, 69);
-  color: rgb(255, 255, 255);
-  padding: 10px 20px;
-  text-align: center;
-  font-weight: bold;
-  font-size: larger;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.btn-fullpay:hover {
-  color: rgb(69, 69, 69);
-  background: rgba(0, 255, 255, 0.75);
-}
-
-.btn-yes {
-  margin-bottom: 10px;
-  background: rgb(171, 255, 132);
-  color: rgb(255, 255, 255);
-  padding: 5px 10px;
-  text-align: center;
-  font-weight: bold;
-  font-size: medium;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.btn-yes:hover {
-  color: rgb(69, 69, 69);
-  background: #88ff51;
-}
-
-.btn-no {
-  margin-bottom: 10px;
-  background: rgb(255, 117, 117);
-  color: rgb(255, 255, 255);
-  padding: 5px 10px;
-  text-align: center;
-  font-weight: bold;
-  font-size: medium;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.btn-no:hover {
-  color: rgb(69, 69, 69);
-  background: #ff4242;
-}
-
-.graph {
-  position: absolute;
-  left: 50%;
-  transform: translate(-20%, 0);
-}
-
-.confirmation {
-  color: red;
-}
-
-b {
-  font-weight: 600;
-  font-size: 20px;
-  margin-bottom: 5px;
-  padding: 4px;
-  color: white;
-  background-color: rgb(69, 69, 69);
-  border-radius: 5px;
-}/*# sourceMappingURL=home.css.map */
+#labelOverlay p.used-size {
+  color: black;
+  line-height: 0.5;
+  font-size: 20pt;
+  padding: 0;
+  margin: 8px;
+}/*# sourceMappingURL=house.css.map */

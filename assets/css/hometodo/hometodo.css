@@ -1,29 +1,9 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  text-align: center;
-}
-
-.personal {
-  background-color: #ff692e !important;
-}
-
 h1 {
   background-color: lightsalmon;
   padding: 10px;
   border-radius: 5px;
   transition: 0.2s;
+  text-align: center;
   cursor: pointer;
 }
 h1:hover {
@@ -41,8 +21,7 @@ a:hover {
 }
 
 h3 {
-  z-index: 100;
-  color: rgb(255, 30, 30);
+  color: rgb(255, 90, 90);
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   text-align: center;
   margin: 20px 0px;
@@ -58,6 +37,7 @@ h3 {
   z-index: 0;
   transition: 0.5s;
   border: none;
+  border-bottom: 0.5px solid rgb(190, 190, 190);
   outline: none;
   border-radius: 5px;
   height: 50px;
@@ -79,25 +59,13 @@ h3 {
   color: rgba(255, 255, 255, 0.75);
   text-transform: uppercase;
   transition: 0.5s;
-  top: 8px;
   left: 0;
 }
 
 .form-group .form-input:valid ~ .form-label,
 .form-group .form-input:focus ~ .form-label {
-  position: absolute;
-  left: 0;
   color: cyan;
-  transform: translateY(-22px);
-  font-size: 15px;
-  padding: 0 6px;
-  background: rgb(53, 53, 53);
-  border-radius: 5px;
-}
-
-.input-valid {
-  color: cyan;
-  transform: translateY(-22px);
+  transform: translateY(-18px);
   font-size: 15px;
   padding: 0 6px;
   background: rgb(53, 53, 53);
@@ -132,14 +100,19 @@ h3 {
 }
 
 .dropdown.active .form-label-cat,
-.form-group .form-input:focus ~ .form-label-cat,
 .form-group .form-input:valid ~ .form-label-cat {
   color: cyan;
-  transform: translateY(-22px);
+  transform: translateY(-18px);
   font-size: 15px;
   padding: 0 6px;
   background: rgb(53, 53, 53);
   border-radius: 5px;
+}
+
+.option.active .form-label-cat {
+  position: absolute;
+  bottom: 20px;
+  color: red;
 }
 
 .dropdown input {
@@ -156,7 +129,6 @@ h3 {
 }
 
 .dropdown .option {
-  z-index: 10000;
   position: absolute;
   top: 36px;
   width: 100%;
@@ -198,6 +170,7 @@ h3 {
   background-color: #343a40;
   color: white;
   padding: 1rem 2rem;
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   font-size: 0.8rem;
@@ -212,13 +185,10 @@ h3 {
   text-decoration: none;
 }
 .infotable .tab-items i {
-  color: rgb(69, 69, 69);
+  color: black;
 }
 .infotable tr:nth-child(even) {
   background-color: rgb(69, 69, 69);
-  color: white;
-}
-.infotable tr:nth-child(even) i {
   color: white;
 }
 
@@ -250,124 +220,4 @@ h3 {
 
 .update-btn {
   background-color: rgb(228, 148, 0);
-}
-
-#donutchart, #chart {
-  height: 500px;
-  width: 500px;
-  font-family: Arial;
-}
-
-#donutchart {
-  position: relative;
-}
-
-#labelOverlay {
-  z-index: 10000;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 16px;
-  line-height: 100px;
-  vertical-align: middle;
-  text-align: center;
-  color: #a2ccef;
-}
-
-.payform .container {
-  margin: 20px;
-}
-
-.btn-pay {
-  width: 100%;
-  margin-bottom: 10px;
-  background: rgb(69, 69, 69);
-  color: rgb(255, 255, 255);
-  padding: 10px 20px;
-  text-align: center;
-  font-weight: bold;
-  font-size: larger;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.btn-pay:hover {
-  color: rgb(69, 69, 69);
-  background: rgba(0, 255, 255, 0.75);
-}
-
-.btn-fullpay {
-  width: 100%;
-  margin-bottom: 10px;
-  background: rgb(69, 69, 69);
-  color: rgb(255, 255, 255);
-  padding: 10px 20px;
-  text-align: center;
-  font-weight: bold;
-  font-size: larger;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.btn-fullpay:hover {
-  color: rgb(69, 69, 69);
-  background: rgba(0, 255, 255, 0.75);
-}
-
-.btn-yes {
-  margin-bottom: 10px;
-  background: rgb(171, 255, 132);
-  color: rgb(255, 255, 255);
-  padding: 5px 10px;
-  text-align: center;
-  font-weight: bold;
-  font-size: medium;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.btn-yes:hover {
-  color: rgb(69, 69, 69);
-  background: #88ff51;
-}
-
-.btn-no {
-  margin-bottom: 10px;
-  background: rgb(255, 117, 117);
-  color: rgb(255, 255, 255);
-  padding: 5px 10px;
-  text-align: center;
-  font-weight: bold;
-  font-size: medium;
-  border: none;
-  border-radius: 5pt;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.btn-no:hover {
-  color: rgb(69, 69, 69);
-  background: #ff4242;
-}
-
-.graph {
-  position: absolute;
-  left: 50%;
-  transform: translate(-20%, 0);
-}
-
-.confirmation {
-  color: red;
-}
-
-b {
-  font-weight: 600;
-  font-size: 20px;
-  margin-bottom: 5px;
-  padding: 4px;
-  color: white;
-  background-color: rgb(69, 69, 69);
-  border-radius: 5px;
-}/*# sourceMappingURL=home.css.map */
+}/*# sourceMappingURL=hometodo.css.map */

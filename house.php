@@ -43,10 +43,57 @@ $home_id=$_SESSION['home_id'];
 <!DOCTYPE html>
 <html>
     <head>
-        <h1><a href="home.php">Personal</a></h1>
-        <h1><a href="house.php">Home</a></h1>
-        <h3><a href="hometodo.php">Home TODO</a></h3>
-    </head>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a href="house.php"><h1 class="home">Home</h1></a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="home.php"><h1>Personal</h1></a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="hometodo.php"><h1>Home To Do</h1></a>
+                </div>
+            </div>
+        </div>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="assets/css/house/house.css">
+        <script src="https://kit.fontawesome.com/ee60cebb6c.js" crossorigin="anonymous"></script>
+        <!-- Chart Script -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Category', 'Amount'],
+                <?php
+                $query="SELECT category, SUM(amount) AS amount FROM homeexpenses WHERE home_id=$home_id GROUP BY category";
+                $exec=mysqli_query($con,$query);
+                while($row=mysqli_fetch_array($exec) ){
+                    echo "['".$row['category']."',".$row['amount']."],";
+                } 
+                ?>
+            ]);
+
+            var options = {
+                backgroundColor: 'transparent',
+                legend:{
+                    position:"none"
+                },
+                pieSliceText: "label",
+                pieSliceBorderColor: "none",
+                pieStartAngle: 100,
+                // title: 'Personal Expenses Chart',
+                pieHole: 0.5,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
+        </script>
+        </head>
 
     <body>
         <!-- <?php require_once 'processhome.php'; ?> -->
@@ -63,19 +110,21 @@ $home_id=$_SESSION['home_id'];
         $result = $con->query("SELECT HExpenseID,username,descr,amount,category,ds,ts FROM homeexpenses WHERE home_id=$home_id ORDER BY HExpenseID DESC");
         if($result->num_rows > 0){
             ?>
-            <div>
+            <div class="container">
                 <!--Creating data table-->
-                <table>
+                <div class="row">
+                <table class="infotable col-sm-12">
+                </div>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th colspan='2'>Action</th>
+                            <th class="tab-head">ID</th>
+                            <th class="tab-head">Username</th>
+                            <th class="tab-head">Description</th>
+                            <th class="tab-head">Amount</th>
+                            <th class="tab-head">Category</th>
+                            <th class="tab-head">Date</th>
+                            <th class="tab-head">Time</th>
+                            <th class="tab-head" colspan='2'>Action</th>
                         </tr>
                     </thead>
                     <!--Loop to see the fetched data table-->
@@ -85,19 +134,23 @@ $home_id=$_SESSION['home_id'];
                     ?>
                                              
                         <tr>
-                            <td> <?php echo $row['HExpenseID']; ?> </td>
-                            <td> <?php echo $row['username']; ?> </td>
-                            <td> <?php echo $row['descr']; ?> </td>
-                            <td> <?php echo $row['amount']; ?> </td>
-                            <td> <?php echo $row['category']; ?> </td>
-                            <td> <?php echo $row['ds']; ?> </td>
-                            <td> <?php echo $row['ts']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['HExpenseID']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['username']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['descr']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['amount']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['category']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['ds']; ?> </td>
+                            <td class="tab-items"> <?php echo $row['ts']; ?> </td>
                             <?php if($row['username']===$username){?>
-                                <td>
-                                    <a href="house.php?edit=<?php echo $row['HExpenseID']; ?>"
-                                        >Edit</a>
-                                    <a href="processhome.php?delete=<?php echo $row['HExpenseID']; ?>"
-                                        >Delete</a>
+                                <td class="tab-items">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <a href="house.php?edit=<?php echo $row['HExpenseID']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a href="processhome.php?delete=<?php echo $row['HExpenseID']; ?>"><i class="fa-solid fa-trash"></i></a>
+                                        </div>
+                                    </div>
                                 </td>
                             <?php } ?>
                         </tr>
@@ -127,28 +180,84 @@ $home_id=$_SESSION['home_id'];
         <form action="processhome.php" method="POST">
             <div class="container">
                 <input type="hidden" name="HExpenseID" value="<?php echo $HExpenseID ?>">
-                <label>Description</label>
-                <input type="text" name="descr" 
-                        value="<?php echo $descr; ?>" placeholder="Description" required>
-                <label>Amount</label>
-                <input type="number" name="amount" 
-                        value="<?php echo $amount; ?>" placeholder="Amount" required/>
-                <label>Category</label>
-                    <select name="category">
-                        <option value="Food">Food</option>
-                        <option value="Transportation">Transportation</option>
-                        <option value="Housing">Housing</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Others">Others</option>
-                    </select>
-                <?php 
-                if ($update == true):
+                <!-- <?php 
+                    if ($everyone === false){
                 ?>
-                    <button type="submit" name="update">Update</button>
-                <?php else: ?>
-                    <button type="submit" name="add">ADD</button>
-                <?php endif; ?>
+                        <button><a href="house.php?everyone=>">Self</a></button>
+                <?php
+                    }else{
+                ?>
+                        <button><a href="house.php?everyone=>">Everyone</a></button>
+                <?php } ?> -->
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input class="form-input" type="text" name="descr" value="<?php echo $descr; ?>" required>
+                            <label class="form-label" for="descr">Description</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input class="form-input" type="number" name="amount" min="0" value="<?php echo $amount; ?>" required>
+                            <label class="form-label" for="amount">Amount</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="dropdown form-group">
+                            <input type="text" class="textBox form-input" name="category" readonly>
+                            <label class="form-label-cat" for="category">Category</label>
+                            <!-- <select name="category">
+                                <option value="Food">Food</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Housing">Housing</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Others">Others</option>
+                            </select> -->
+                            <div class="option">
+                                <div onclick="show('Food')">Food</div>
+                                <div onclick="show('Transportation')">Transportation</div>
+                                <div onclick="show('Housing')">Housing</div>
+                                <div onclick="show('Entertainment')">Entertainment</div>
+                                <div onclick="show('Others')">Others</div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <?php 
+                    if ($update == true):
+                    ?>
+                    
+                    <div class="col-sm-2">
+                        <button class="button update-btn" type="submit" name="update">Update</button>
+                    </div>
+                        
+                    <?php else: ?>
+                    <div class="col-sm-2">
+                        <button class="button add-btn" type="submit" name="add">ADD</button>
+                        <button class="button add-btn" type="submit" name="addevery"> Add As Everyone Paid</button>
+                    </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </form>
+        <script>
+            function show(anything){
+                document.querySelector('.textBox').value=anything;
+                document.querySelector('.form-label-cat').classList.add('input-valid');
+            }
+            let dropdown=document.querySelector('.dropdown');
+            dropdown.onclick=function(){
+                dropdown.classList.toggle('active');
+            }
+        </script>
+        <div class="container">
+            <div id="donutchart" class="col-xs-12 col-sm-6 col-md-4">
+                <div id="chart"></div>
+                <div id="labelOverlay">
+                    <!-- <h3>Total Spent: <?php echo $totalamount['totalamount'] ?></h3> -->
+                    <p class="used-size">piechart</p>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
