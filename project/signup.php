@@ -3,6 +3,7 @@
 <?php
 include('config.php');
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -59,6 +60,7 @@ include('config.php');
     <div>
         <form action="signup.php" method="POST">
             <div class="container-fluid">
+                <h1>Welcome to Bachelor Expense Management</h1>
                 <h1>Registration</h1>
                 <p>Fill up the form with correct values</p>
             </div>
@@ -67,65 +69,80 @@ include('config.php');
                 <!-- For First Name-->
                 <div class="row">
                     <div class="col-sm-6">
-                        <div tabindex="0" class="form-group fn">
-                            <label tabindex="0" class="form-label input-active" for="firstname">First Name</label>
-                            <input tabindex="0" class="form-input" type="text" name="firstname" required>
+                        <div class="form-group fn">
+                            <input class="form-input" type="text" name="firstname" required>
+                            <label class="form-label" for="firstname">First Name</label>
                         </div>
                     </div>
                 
 
                 <!-- For Middle Name-->
                     <div class="col-sm-6">
-                        <div tabindex="0" class="form-group mn">
-                            <label tabindex="0" class="form-label input-active" for="middlename">Middle Name</label>
-                            <input tabindex="0" class="form-input" type="text" name="middlename">
+                        <div class="form-group mn">
+                            <input class="form-input" type="text" name="middlename">
+                            <label class="form-label" for="middlename">Middle Name</label>
                         </div>
                     </div>
                 
 
                 <!-- For Last Name-->
+                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="form-label input-active" for="lastname">Last Name</label>
                             <input class="form-input" type="text" name="lastname" required>
+                            <label class="form-label" for="lastname">Last Name</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For Email-->
+                    <!-- For Email-->
+                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="form-label input-active" for="email">Email Address</label>
                             <input class="form-input" type="email" name="email" required>
+                            <label class="form-label" for="email">Email Address</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For Phone number-->
+                    <!-- For Phone number-->
+                    <div class="com-sm-12">
                         <div class="form-group">
-                            <label class="form-label input-active" for="phone">Phone Number</label>
                             <input class="form-input" type="text" name="phone" required>
+                            <label class="form-label" for="phone">Phone Number</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For User Name-->
+                    <!-- For User Name-->
+                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="form-label input-active" for="username">User Name</label>
                             <input class="form-input" type="text" name="username" required>
+                            <label class="form-label" for="username">User Name</label>
                         </div>
-                        
+                    </div>
+                    
 
-                        <!-- For Password-->
+                    <!-- For Password-->
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="form-label input-active" for="pass">Password</label>
                             <input class="form-input" type="password" name="pass" required>
+                            <label class="form-label" for="pass">Password</label>
                         </div>
+                    </div>
 
-                        <!-- For Password-->
+                    <!-- For Password-->
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="form-label input-active" for="confirmpass">Confirm pass</label>
                             <input class="form-input" type="password" name="confirmpass" required>
+                            <label class="form-label" for="confirmpass">Confirm pass</label>
                         </div>
+                    </div>
+                    <input class="form-submit" type="submit" id="register" name="register" value="Sign Up">
                 </div>
-                <input class="form-submit" type="submit" id="register" name="register" value="Sign Up">
             </div>
         </form>
+        <div class="login">
+        <button class="form-submit" type="submit"><a href="index.php">Login</a></button>
+        </div>
     </div>
     <script>
         $('.form-input').hover(function(){

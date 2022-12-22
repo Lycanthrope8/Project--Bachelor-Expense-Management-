@@ -10,7 +10,7 @@ body {
   gap: 40px;
   font-size: 14px;
   line-height: 1.8;
-  background: linear-gradient(135deg, rgb(50, 50, 50), black);
+  background: red;
   font-weight: 400;
   font-family: "poppins", sans-serif;
   margin: 0px;

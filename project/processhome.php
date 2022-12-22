@@ -9,6 +9,7 @@ $home_id=$_SESSION['home_id'];
 $home_members=$_SESSION['home_members'];
 $HExpenseID=0;
 $update=false;
+$everyone=false;
 $descr = '';
 $amount = '';
 $category = '';
@@ -38,18 +39,17 @@ if(isset($_POST['add'])){
     $hometopersonal = $addtopersonal->execute([mysqli_insert_id($con),$user_id,$username,$descr,($amount/$member_count),$category]); 
 
     // Adding to UserDebtSurplus
-    
     foreach ($home_members as $member) {
         
         $debtsurplus = $con->query("SELECT creditor,debtor FROM userdebtsurplus WHERE debtor='$member' AND creditor='$username'");
         if($debtsurplus->num_rows == 0) {
-            $adddebtsurplusquery ="INSERT INTO userdebtsurplus (home_id,creditor,debtor,amount) VALUES (?,?,?,?)";
+            $adddebtsurplusquery ="INSERT INTO userdebtsurplus (home_id,creditor,debtor,descr,amount) VALUES (?,?,?,?,?)";
             $adddebtsurplusprepare = $con->prepare($adddebtsurplusquery);
-            $adddebtsurplus = $adddebtsurplusprepare->execute([$home_id,$username,$member,$amount/$member_count]);
+            $adddebtsurplus = $adddebtsurplusprepare->execute([$home_id,$username,$member,$descr,$amount/$member_count]);
         } else {
-            $updatedebtsurplusquery = "UPDATE userdebtsurplus SET amount=amount+(?) WHERE debtor=?";
+            $updatedebtsurplusquery = "UPDATE userdebtsurplus SET amount=amount+(?), descr=CONCAT(descr,',',?) WHERE debtor=?";
             $updatedebtsurplusprepare = $con->prepare($updatedebtsurplusquery);
-            $updatedebtsurplus = $updatedebtsurplusprepare->execute([$amount/$member_count,$member]);
+            $updatedebtsurplus = $updatedebtsurplusprepare->execute([$amount/$member_count,$descr,$member]);
         }
     }
 
@@ -86,6 +86,9 @@ if(isset($_GET['delete'])){
     $_SESSION['message'] = "Record Has Been Deleted";
     $_SESSION['msg_type'] = "Danger";
     header("Location: house.php?=Succesfully Deleted");
+}
+if(isset($_GET['everyone'])){
+    $everyone=true;
 }
 
 if(isset($_GET['edit'])){
@@ -138,4 +141,37 @@ if (isset($_POST['update'])){
     $_SESSION['msg_type'] = 'warning';
     header("Location: house.php?=Successfully Updated");
 }
+if(isset($_POST['addevery'])){
+    $descr = $_POST['descr'];
+    $amount = $_POST['amount'];
+    $category = $_POST['category'];
+    $everyone = "Everyone";
+    $addsql = "INSERT INTO homeexpenses (home_id,user_id,username,descr,amount,category) VALUES(?,?,?,?,?,?)";
+    $stmtadd = $con->prepare($addsql);     // ???????????????????????
+    $result = $stmtadd->execute([$home_id,$user_id,$everyone,$descr,$amount,$category]); 
+    ////Adding to personal expense
+    $addsql = "INSERT INTO userexpenses (HExpenseID,user_id,username,descr,amount,category) VALUES(?,?,?,?,?,?)";
+    $addtopersonal = $con->prepare($addsql);     // ???????????????????????
+    $hometopersonal = $addtopersonal->execute([NULL,$user_id,$username,$descr,($amount/$member_count),$category]); 
+
+
+    ////adding to each members personal expense
+    foreach ($home_members as $member) {
+        $memberinfo=$con->query("SELECT user_id FROM users WHERE username='$member'");
+        $row=$memberinfo->fetch_assoc();
+        $user_id=$row['user_id'];
+
+        $addsql = "INSERT INTO userexpenses (HExpenseID,user_id,username,descr,amount,category) VALUES(?,?,?,?,?,?)";
+        $addtopersonal = $con->prepare($addsql);     // ???????????????????????
+        $hometopersonal = $addtopersonal->execute([NULL,$user_id,$member,$descr,($amount/$member_count),$category]);
+        
+    }
+    
+
+    
+    $_SESSION['message'] = "Record Has Been Saved";
+    $_SESSION['msg_type'] = "Success";
+    header("Location: house.php?=Succesfully Added");
+}
+
 ?>

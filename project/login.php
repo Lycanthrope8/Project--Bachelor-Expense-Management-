@@ -51,8 +51,9 @@ if (isset($_POST['username']) && isset($_POST['pass'])) {
             header("Location: home.php");
             exit();
         }else{  
-            echo "<h1> Login failed. Invalid username or pass.</h1>";  
-            header("Location: index.php?error=Invalid username or password");
+            // echo "<h1> Login failed. Invalid username or pass.</h1>";  
+            $_SESSION['error']="Incorrect username or PAssword";
+            header("Location: index.php?error=Invalid username or password!");
             exit();
                 }
         }

@@ -15,10 +15,7 @@ if(isset($_POST['add'])){
     $descr = $_POST['descr'];
     $amount = $_POST['amount'];
     $category = $_POST['category'];
-
     
-
-
     // $con->query("INSERT INTO $user_pexpenses (descr,amount,ds,ts) VALUES($descr,$amount,getdate(),getdate())");
     $addsql = "INSERT INTO userexpenses (user_id,username,descr,amount,category) VALUES(?,?,?,?,?)";
     $stmtadd = $con->prepare($addsql);     // ???????????????????????
@@ -68,4 +65,3 @@ if (isset($_POST['update'])){
     header("Location: home.php?=Successfully Updated");
 }
 ?>
-
